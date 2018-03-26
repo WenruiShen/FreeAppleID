@@ -16,12 +16,18 @@ signPageUrl = '/#!&page=signin'
 #help(webdriver)
 browser = webdriver.Chrome()
 
-# Apple-Id Homepage Signin
-#signinUrl = appleIdHomepageUrl + signPageUrl
-signinUrl = 'http://www.baidu.com'
+# Apple-Id Signin page
+signinUrl = appleIdHomepageUrl + signPageUrl
+#signinUrl = 'http://www.baidu.com'
 print(signinUrl)
 browser.get(signinUrl)
 html = browser.page_source
+
+# Agent
+
+# Https
+
+#
 
 
 
