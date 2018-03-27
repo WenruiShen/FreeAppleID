@@ -9,19 +9,23 @@
 import sys
 from selenium import webdriver
 
+appleHomepageUrl = 'https://www.apple.com/cn/'
 appleIdHomepageUrl = 'https://appleid.apple.com'
 signPageUrl = '/#!&page=signin'
-
+signinUrl = appleIdHomepageUrl + signPageUrl
+baiduUrl = 'http://www.baidu.com'
 
 #help(webdriver)
 browser = webdriver.Chrome()
 
 # Apple-Id Signin page
-signinUrl = appleIdHomepageUrl + signPageUrl
-#signinUrl = 'http://www.baidu.com'
-print(signinUrl)
-browser.get(signinUrl)
+
+testUrl = appleIdHomepageUrl
+print(testUrl)
+browser.get(testUrl)
 html = browser.page_source
+print(html)
+#
 
 # Agent
 

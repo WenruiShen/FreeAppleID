@@ -14,7 +14,8 @@ Please operate as follows:
 1. pip3 install selenium
 
 2. We use Headless Chrome here:
-    Chrome-driver链接: https://pan.baidu.com/s/1nvdKv7F 密码: uc2i
+    Chrome-driver链接: https://chromedriver.storage.googleapis.com/index.html?path=2.37/
+        or : 链接:https://pan.baidu.com/s/1-nGRVlpoquCXcixsrfmj-g  密码:23pn
     tar jxvf chromedriver_mac64.zip
     mv chromedriver /usr/local/bin/
 
