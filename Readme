@@ -19,4 +19,4 @@ Please operate as follows:
     tar jxvf chromedriver_mac64.zip
     mv chromedriver /usr/local/bin/
 
-3.
+3. pip3 install PILLOW
