@@ -19,7 +19,7 @@ def request1(base64Str, appkey = "8df14d494a62a4a5eefcb1dbc6b10eef"):
     f = urllib.request.urlopen(url, params)
 
     content = f.read()
-
+    res = json.loads(content)
     if res:
         error_code = res["error_code"]
         if error_code == 0:
