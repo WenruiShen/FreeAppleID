@@ -20,3 +20,13 @@ Please operate as follows:
     mv chromedriver /usr/local/bin/
 
 3. pip3 install PILLOW
+
+4. AppleScript called by Python:
+
+
+    refer:[1].https://stackoverflow.com/questions/16065162/calling-applescript-from-python-without-using-osascript-or-appscript
+          [2].https://pypi.python.org/pypi/py-applescript
+          [3].https://github.com/WowJesse/AppleScriptAutoLoginAppStore
+
+
+
