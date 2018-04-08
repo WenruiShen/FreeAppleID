@@ -10,23 +10,10 @@
 import applescript
 
 scpt = applescript.AppleScript('''
-    on run {arg1, arg2}
-        say arg1 & " " & arg2
-    end run
-
-    on foo()
-        return "bar"
-    end foo
-
-    on Baz(x, y)
-        return x * y
-    end bar
-    
     -- Function for iTunes sign in
     property loginBtn : "登录…"
     property logoutBtn : "注销"
     -- Launch iTunes
-    
     
     on openAppStore (appleId, passwd)
         tell application "App Store" to activate
@@ -42,22 +29,20 @@ scpt = applescript.AppleScript('''
                     click menu item loginBtn of menu "商店" of menu bar 1
                 end try
                 
-                delay 2
-                set value of text field 2 of sheet 1 of window "App Store" to appleId
                 delay 1
+                set value of text field 2 of sheet 1 of window "App Store" to appleId
                 set value of text field 1 of sheet 1 of window "App Store" to passwd
-                
-                delay 2
                 keystroke return      -- Press the return key "登陆"
-                delay 5
-                --keystroke return      -- Click Review
-                click menu item "Review"
+                
+                delay 10
+                keystroke return      -- Click Review
+                --click menu item 2 of sheet 1 of window "App Store"
+                --click menu item "Review" --of sheet 1 of window "App Store"
                 
                 --keystroke appleId
                 --keystroke tab
                 delay 1
                 --keystroke passwd
-                keystroke return      -- Press the return key
 			
             end tell
         end tell
