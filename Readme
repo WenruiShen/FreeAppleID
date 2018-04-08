@@ -22,11 +22,14 @@ Please operate as follows:
 3. pip3 install PILLOW
 
 4. AppleScript called by Python:
-
+    1. pip3 install -U pyobjc
+    2. Download py-applescript from: [https://pypi.python.org/pypi/py-applescript];
+    3. tar jxvf py-applescript-1.0.1.tar.gz
+    4. python3 setup.py install
 
     refer:[1].https://stackoverflow.com/questions/16065162/calling-applescript-from-python-without-using-osascript-or-appscript
-          [2].https://pypi.python.org/pypi/py-applescript
-          [3].https://github.com/WowJesse/AppleScriptAutoLoginAppStore
+          [2].https://github.com/WowJesse/AppleScriptAutoLoginAppStore
+          [3].https://pythonhosted.org/pyobjc/install.html
 
 
 
