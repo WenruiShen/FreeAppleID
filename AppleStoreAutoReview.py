@@ -38,18 +38,23 @@ scpt = applescript.AppleScript('''
                 click button 3 of sheet 1 of window "App Store" 
                 --keystroke return 
                 
-                delay 10
+                delay 15
                 -- Click Review
                 click button 1 of sheet 1 of window "App Store"
                 --keystroke return
                 
-                delay 10 
+                delay 15
                 --select the aggrement of the condition.
                 click checkbox 1 of group 5 of UI element 1 of scroll area 1 of group 1 of group 1 of window "App Store"
-                
                 --press continue
                 click button 2 of group 6 of UI element 1 of scroll area 1 of group 1 of group 1 of window "App Store"
                 
+                delay 8
+                --select 'Mr.'
+                click pop up button 1 of group 3 of UI element 1 of scroll area 1 of group 1 of group 1 of window "App Store"
+                click menu item 2 of menu 1 of group 1 of window "App Store"
+                --press continue
+                click button 3 of group 7 of UI element 1 of scroll area 1 of group 1 of group 1 of window "App Store"
                 
             end tell
         end tell
