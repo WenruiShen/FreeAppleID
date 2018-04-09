@@ -11,8 +11,9 @@ import applescript
 
 scpt = applescript.AppleScript('''
     -- Function for iTunes sign in
-    property loginBtn : "登录…"
-    property logoutBtn : "注销"
+    property storeNmae : "Store"        --"商店"
+    property loginBtn : "Sign In…"      --"登录…"
+    property logoutBtn : "Sign Out"     --"注销"
     -- Launch iTunes
     
     on openAppStore (appleId, passwd)
@@ -22,28 +23,30 @@ scpt = applescript.AppleScript('''
                 set frontmost to true
                 
                 try
-                    click menu item loginBtn of menu "商店" of menu bar 1
+                    click menu item loginBtn of menu storeNmae of menu bar 1
                 on error
-                    click menu item logoutBtn of menu "商店" of menu bar 1
+                    click menu item logoutBtn of menu storeNmae of menu bar 1
                     delay 2
-                    click menu item loginBtn of menu "商店" of menu bar 1
+                    click menu item loginBtn of menu storeNmae of menu bar 1
                 end try
                 
                 delay 1
                 set value of text field 2 of sheet 1 of window "App Store" to appleId
                 set value of text field 1 of sheet 1 of window "App Store" to passwd
-                keystroke return      -- Press the return key "登陆"
+                
+                -- Press the return key "登陆"
+                click button 3 of sheet 1 of window "App Store"
+                --keystroke return      
                 
                 delay 10
-                keystroke return      -- Click Review
-                --click menu item 2 of sheet 1 of window "App Store"
-                --click menu item "Review" --of sheet 1 of window "App Store"
+                -- Click Review
+                click button 1 of sheet 1 of window "App Store"
+                --keystroke return
                 
-                --keystroke appleId
-                --keystroke tab
-                delay 1
-                --keystroke passwd
-			
+                --select the aggrement of the condition.
+                
+                --scroll area 1 of group 1 of group 1 of window "App Store"
+			    
             end tell
         end tell
         

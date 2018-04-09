@@ -34,5 +34,8 @@ Please operate as follows:
           [3].https://pythonhosted.org/pyobjc/install.html
           [4].https://stackoverflow.com/questions/40837086/i-want-the-applescript-to-select-text-field-2-of-sheet-1-of-window-app-store-o?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 
+5. Accessibility Inspector (Just for developer):
+    1. Install Xcode.
+    2.
 
-
+    refer:[1].https://developer.apple.com/library/content/documentation/Accessibility/Conceptual/AccessibilityMacOSX/OSXAXTestingApps.html
