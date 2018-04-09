@@ -21,13 +21,13 @@ scpt = applescript.AppleScript('''
         tell application "System Events"
             tell process "App Store"
                 set frontmost to true
-                
+                delay 3
                 try
-                    click menu item loginBtn of menu storeNmae of menu bar 1
+                    click menu item 12 of menu 1 of menu bar item 4 of menu bar 1 -- "Sign In…"
                 on error
-                    click menu item logoutBtn of menu storeNmae of menu bar 1
+                    click menu item 12 of menu 1 of menu bar item 4 of menu bar 1 -- "Sign Out"
                     delay 2
-                    click menu item loginBtn of menu storeNmae of menu bar 1
+                    click menu item 12 of menu 1 of menu bar item 4 of menu bar 1 -- "Sign In…"
                 end try
                 
                 delay 1
@@ -35,18 +35,22 @@ scpt = applescript.AppleScript('''
                 set value of text field 1 of sheet 1 of window "App Store" to passwd
                 
                 -- Press the return key "登陆"
-                click button 3 of sheet 1 of window "App Store"
-                --keystroke return      
+                click button 3 of sheet 1 of window "App Store" 
+                --keystroke return 
                 
                 delay 10
                 -- Click Review
                 click button 1 of sheet 1 of window "App Store"
                 --keystroke return
                 
+                delay 10 
                 --select the aggrement of the condition.
+                click checkbox 1 of group 5 of UI element 1 of scroll area 1 of group 1 of group 1 of window "App Store"
                 
-                --scroll area 1 of group 1 of group 1 of window "App Store"
-			    
+                --press continue
+                click button 2 of group 6 of UI element 1 of scroll area 1 of group 1 of group 1 of window "App Store"
+                
+                
             end tell
         end tell
         
