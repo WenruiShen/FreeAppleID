@@ -28,18 +28,21 @@ Please operate as follows:
     4. python3 setup.py install
 
     *.请打开'系统偏好设置'-'安全与隐私'，允许脚本对mac的控制！
+    *. Enable Accessibility Inspector (Just for developer):
 
     refer:
     [1].https://stackoverflow.com/questions/16065162/calling-applescript-from-python-without-using-osascript-or-appscript
     [2].https://github.com/WowJesse/AppleScriptAutoLoginAppStore
     [3].https://pythonhosted.org/pyobjc/install.html
     [4].https://stackoverflow.com/questions/40837086/i-want-the-applescript-to-select-text-field-2-of-sheet-1-of-window-app-store-o?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+    [5].https://sspai.com/post/43758?from=timeline
+    [6].https://developer.apple.com/library/content/documentation/Accessibility/Conceptual/AccessibilityMacOSX/OSXAXTestingApps.html
+    [7].http://www.macosxautomation.com/applescript/uiscripting/
 
-5. Accessibility Inspector (Just for developer):
-    1. Install Xcode.
-    2.
+5.
 
-    refer:
-    [1].https://developer.apple.com/library/content/documentation/Accessibility/Conceptual/AccessibilityMacOSX/OSXAXTestingApps.html
-    [2].https://sspai.com/post/43758?from=timeline
-    [3].http://www.macosxautomation.com/applescript/uiscripting/
+
+
+
+
+

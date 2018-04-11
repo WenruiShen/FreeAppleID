@@ -60,12 +60,12 @@ scpt = applescript.AppleScript('''
                 --select 'None' as the payment method
                 click radio button 6 of group 6 of UI element 1 of scroll area 1 of group 1 of group 1 of window "App Store"
                 --press continue
-                delay 1
+                (*delay 1
                 click button 3 of group 14 of UI element 1 of scroll area 1 of group 1 of group 1 of window "App Store"
                 
                 delay 10
                 --Welcom page -> Continue
-                click button 1 of sheet 1 of window "App Store"
+                click button 1 of sheet 1 of window "App Store"*)
                 
             end tell
         end tell
