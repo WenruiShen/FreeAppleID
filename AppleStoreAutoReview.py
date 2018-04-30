@@ -74,6 +74,13 @@ scpt = applescript.AppleScript('''
     end openAppStore
 ''')
 
-user_email = "zhangtao001@protonmail.com"
-user_password = "Apple_swr123"
+#user_email = "zhangtao001@protonmail.com"
+#user_password = "Apple_swr123"
+
+#user_email = "guanjinxi001a@protonmail.com"
+#user_password = "Apple_gjx123"
+
+user_email = "shijiachen001a@protonmail.com"
+user_password = "Apple_sjc123"
+
 print(scpt.call('openAppStore', user_email, user_password))
