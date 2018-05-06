@@ -5,7 +5,7 @@ from urllib import parse
 
 
 # 识别验证码
-def request1(base64Str, appkey = "8df14d494a62a4a5eefcb1dbc6b10eef"):
+def authCodeParseRequest(base64Str, appkey = "8df14d494a62a4a5eefcb1dbc6b10eef"):
     url = "http://op.juhe.cn/vercode/index"
     params = {
         "key": appkey,  # 您申请到的APPKEY
