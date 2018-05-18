@@ -44,14 +44,9 @@ class appleIdRegisterProcessor:
                 return False
 
             # Step-2: Input personal Info.
-            tempEmailAddr = self.__appleIdRegisterOperator.getTempEmailAddr()
-            if tempEmailAddr is None:
+            if not self.__appleIdRegisterOperator.inpuAllInfo():
+                print("Failed input personal info.")
                 return False
-            print("The temp Email addr: " + tempEmailAddr)
-
-
-
-
 
             for i in range(3):
                 # Step-3: Recognize the auth img.
@@ -84,15 +79,6 @@ class appleIdRegisterProcessor:
 
 
 
-
-
-
-
-
-
-personalInfoInput(browser, signupInput_xpath_base, lastName, firstName, user_birthday)
-appleIdPasswordInput(browser, signupInput_xpath_base, user_email, user_password)
-safeQuestionInput(browser, signupInput_xpath_safeQuestion)
 
 
 authPenal_xpath = signupInput_xpath_base + "/div[6]/div/create-captcha/div/div/div/div/"

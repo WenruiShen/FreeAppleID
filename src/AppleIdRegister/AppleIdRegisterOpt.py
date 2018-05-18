@@ -140,7 +140,11 @@ class appleIdRegisterOpt():
         answer_3 = "Long Beach"
         self.__selectOneSafeQuestion(3, safeQuestionValue_3, answer_3)
 
-
+    def inpuAllInfo(self):
+        self.personalInfoInput()
+        self.appleIdPasswordInput()
+        self.safeQuestionInput()
+        return True
 
 
 
