@@ -1,0 +1,4 @@
+# Ignore all files under this fold,
+*
+# except this file.
+!.gitignore
