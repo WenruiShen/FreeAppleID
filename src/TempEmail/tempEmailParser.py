@@ -1,15 +1,19 @@
 #!/usr/bin/python3
 #coding=utf-8
 
-
+##############################################
+#
+# Author:       Shen Wenrui
+# Date:         20180518
+# Description:
+#
+##############################################
 
 import sys
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
-
 import re
 
 from .tempEmailXpath import tempEmailXpath
@@ -36,55 +40,60 @@ class tempEmailParser():
             if not re.match(r'.+?@.+?\.com', tempEmailAddr):
                 print("Illegal tempEmailAddr: " + tempEmailAddr)
                 tempEmailAddr = None
-        except:
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
             tempEmailAddr = None
         return tempEmailAddr
 
     # Email Inbox.
     def getEmailListLength(self):
         try:
-            # Step 3: Email list:
+            # Email list:
             emailContent_xpath = self.__xpath.getEmailContentXpath()
             emailElementList = self.__tempEmailBrowser.find_elements_by_xpath(emailContent_xpath)
             return len(emailElementList)
-        except:
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
             return 0
 
     def getLatestEmailDat(self):
         try:
-            # Step 3: Get the latest Email's date:
+            # Get the latest Email's date:
             latestEmailDate_xpath = self.__xpath.getLatestEmailDateXpath()
             latestEmailDate = self.__tempEmailBrowser.find_element_by_xpath(latestEmailDate_xpath).text
             return latestEmailDate
-        except:
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
             return None
 
     def getInboxInfo(self):
-        emailElementList = self.getEmailListLength()
+        emailElementListLen = self.getEmailListLength()
         latestEmailDate = self.getLatestEmailDat()
-        return emailElementList, latestEmailDate
+        return emailElementListLen, latestEmailDate
 
     def getNextUpdateSec(self):
         try:
-            # Step 4: Get next update sec:
+            # Get next update sec:
             remainUpdateSec_xpath = self.__xpath.getRemainUpdateSecXpath()
             remainUpdateSec = re.findall(r"Next update in: (.+?) sec",
                                          self.__tempEmailBrowser.find_element_by_xpath(remainUpdateSec_xpath).text)
             remainUpdateSec = remainUpdateSec[0] if len(remainUpdateSec)!=0 else '0'
             return int(remainUpdateSec)
-        except:
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
             return None
 
     def getLatestEmailAuthCode(self):
         try:
-            # Step 4: Get the latest Email's context:
+            # Get the latest Email's context:
             latestEmailContent_xpath = self.__xpath.getLatestEmailContentXpath()
             latestEmailContent = self.__tempEmailBrowser.find_element_by_xpath(latestEmailContent_xpath).text
-            # Step 5: Parse out the Auth Code:
+            # Parse out the Auth Code:
             # TODO:
 
             return latestEmailContent
-        except:
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
             return None
 
     # Load the email page and wait explicitly.

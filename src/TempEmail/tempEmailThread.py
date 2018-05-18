@@ -3,6 +3,7 @@
 
 import threading
 
+from .tempEmailListener import tempEmailListener
 
 class guerrillamailThread(threading.Thread):
     def __init__(self, threadID, name, counter):
@@ -15,15 +16,8 @@ class guerrillamailThread(threading.Thread):
         print("开启线程： " + self.name)
         print("Start the Main process: applying temp email.")
 
-        guerrillamailListener()
+        guerrillamail = tempEmailListener()
+        guerrillamail.guerrillamailBrowser()
 
         print("结束线程： " + self.name)
         print("End the Main process.")
-
-
-
-# 创建新线程
-thread1 = guerrillamailThread(1, "Thread-1", 1)
-
-# 开启新线程
-thread1.start()

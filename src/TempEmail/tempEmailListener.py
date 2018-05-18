@@ -4,7 +4,7 @@
 ##############################################
 #
 # Author:       Shen Wenrui
-# Date:         20180506
+# Date:         20180518
 # Description:
 #
 ##############################################
@@ -12,96 +12,100 @@
 
 
 from selenium import webdriver
-
-
 import time
 
+from .tempEmailParser import tempEmailParser
+
+class tempEmailListener:
+
+    def guerrillamailBrowser(self):
+        try:
+            # Open the browser.
+            tempEmailBrowser = webdriver.Chrome()
+            if tempEmailBrowser is None:
+                return False
+            print("Open the browser.")
+
+            return self.__guerrillamailListener(tempEmailBrowser)
+
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
+        finally:
+            # Close the browser.
+            tempEmailBrowser.quit()
+            print("Close the browser.")
 
 
+    def __guerrillamailListener(self, tempEmailBrowser):
+        try:
 
+            self.__tempEmailParser = tempEmailParser(tempEmailBrowser)
 
+            # Step-1: Open the netpage of guerrillamail.
+            if not self.__tempEmailParser.loadTempEamilPage():
+                return False
 
-def waitAuthCode(tempEmailBrowser, email_xpath_base):
-    emailContent_xpath_base = email_xpath_base + "/div[@id='tabs-content']/div[@id='inbox']"
-    emailContent_xpath = emailContent_xpath_base + "//table[@id='email_table']/tbody[@id='email_list']/tr"
+            # Step-2: Get temp email address.
+            tempEmailAddr = self.__tempEmailParser.getTempEmailAddr()
+            if tempEmailAddr is None:
+                return False
+            print("The temp Email addr: " + tempEmailAddr)
 
-    oriEmailListLength = getEmailListLength(tempEmailBrowser, emailContent_xpath)
-    print(oriEmailListLength)
+            # Step-3: Init the inbox.
+            self.__emailElementListLen, self.__latestEmailDate = self.__tempEmailParser.getInboxInfo()
+            print("Current Inbox Emails list's length: {}, last date: {}.".format(self.__emailElementListLen, self.__latestEmailDate))
 
-    # waitting for freshing the inbox.
-    for i in range(2):
-        remainUpdateSec = getNextUpdateSec(tempEmailBrowser, emailContent_xpath_base)
-        print("Next update in: " + str(remainUpdateSec) + " sec")
+            # Step-4: Start the thread of applying appleId.
+            print("Now start the thread of Applying Apple ID!")
 
-        print("Start : %s" % time.ctime())
-        time.sleep(remainUpdateSec + 3)
-        print("End : %s" % time.ctime())
+            while True:
+                # Step-5: Whether register appleId success.
 
-        emailListLength = getEmailListLength(tempEmailBrowser, emailContent_xpath)
-        print(emailListLength)
+                # Step-6: Whether thread-2 is stopped.
 
-        if(emailListLength > oriEmailListLength):
-            authCode = getLatestEmailAuthCode(tempEmailBrowser, emailContent_xpath)
-            print("authCode: " + authCode)
-            oriEmailListLength = emailListLength
-            return authCode
+                # Step-7: Blockly listen to the inbox.
+                authCode = self.__waitAuthCode()
+                if authCode is None:
+                    print("Failed")
 
-        latestEmailDate = getLatestEmailDat(tempEmailBrowser, emailContent_xpath)
-        print(latestEmailDate)
-
-    return None
-
-
-
-
-
-
-
-
-def guerrillamailListener():
-    try:
-        # Step-1: Open the browser.
-        tempEmailBrowser = webdriver.Chrome()
-        if tempEmailBrowser is None:
-            return False
-        print("Open the browser")
-
-        # Step-2: Open the netpage of guerrillamail.
-        if not loadTempEamilPage(tempEmailBrowser):
-            return False
-        print("Successfully load: " + guerrillamailUrl)
-
-        # Step-3: Get temp email address.
-        email_xpath_base = getEmailBaseXpath()
-        tempEmailAddr = getTempEmailAddr(tempEmailBrowser, email_xpath_base)
-        if tempEmailAddr is None:
+            return True
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
             return False
 
-        # Step-4: Init the inbox.
-        emailContent_xpath = xxx
-        oriEmailElementList, latestEmailDate = getInboxInfo(tempEmailBrowser, emailContent_xpath)
 
-        # Step-5: Start the thread of applying appleId.
+    def __waitAuthCode(self):
+        try:
+            remainUpdateSec = self.__tempEmailParser.getNextUpdateSec()
+            print("Next update in: {} sec.".format(remainUpdateSec))
 
-        while False:
-            # Step-6: Whether register appleId success.
+            print("Start : {}".format(time.ctime()))
+            time.sleep(remainUpdateSec + 3)
+            print("End : {}".format(time.ctime()))
 
-            # Step-7: Whether thread-2 is stopped.
+            emailElementListLen, latestEmailDate = self.__tempEmailParser.getInboxInfo()
+            print("Current Inbox Emails list's length: {}, last date: {}.".format(self.__emailElementListLen,
+                                                                                  self.__latestEmailDate))
 
-            # Step-8: Blockly listen to the inbox.
-            authCode = waitAuthCode(tempEmailBrowser, email_xpath_base)
-            if authCode is None:
-                print("Failed")
+            if(emailElementListLen > self.__emailElementListLen):
+                authCode = self.__tempEmailParser.getLatestEmailAuthCode()
+                print("authCode: " + authCode)
+                self.__emailElementListLen = emailElementListLen
+                self.__latestEmailDate = latestEmailDate
+                return authCode
+            return None
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
+            return None
 
-        return True
 
-    except Exception as err:
-        print("[ERROR]:" + str(err))
 
-    finally:
-        # Close the browser.
-        # tempEmailBrowser.quit()
-        print("Close the browser.")
+
+
+
+
+
+
 
 
 
