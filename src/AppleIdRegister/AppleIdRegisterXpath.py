@@ -60,4 +60,21 @@ class appleIdRegisterXpath():
         passwordInputXpath = self.__signupInputXpathBase() + "/div[3]/div"
         return passwordInputXpath
 
+    def getAppleIdEmailXpath(self):
+        appleIdEmailXpath = self.__getPasswordInputXpath() + "/div[1]//input[@type='email']"
+        return appleIdEmailXpath
+
+    def getPasswordFirstInputXpath(self):
+        passwordFirstInputXpath = self.__getPasswordInputXpath() + "/div[2]//new-password//input[@type='password']"
+        return passwordFirstInputXpath
+
+    def getPasswordConfirmXpath(self):
+        passwordConfirmXpath = self.__getPasswordInputXpath() + "/div[2]//confirm-password//input[@type='password']"
+        return passwordConfirmXpath
+
+
+    # Safe questions.
+
+
+
 

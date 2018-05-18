@@ -11,9 +11,9 @@
 
 class userInfo():
     def __init__(self):
-        self.firstName = 'Test'
-        self.lastName = 'tester'
-        self.user_birthday = "04081994"
-        self.user_password = "Apple_test123"
-        self.user_email = "c3uiya+8tysatee8mklw@sharklasers.com"
+        self.__firstName = 'Test'
+        self.__lastName = 'tester'
+        self.__userBirthday = "04081994"
+        self.__userPassword = "Apple_test123"
+        self.__userEmail = "c3uiya+8tysatee8mklw@sharklasers.com"
 

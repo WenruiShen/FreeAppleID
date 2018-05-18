@@ -34,51 +34,62 @@ class appleIdRegisterOpt():
         firstNameElement.clear()
         firstNameElement.send_keys(firstName)
 
+    def __nationSelect(self, nation):
+        nationalityXpath = self.__xpath.getPersonalInfoXpathNation()
+        nationalitySelector = Select(self.__appleIdRegisterBrowser.find_element_by_xpath(nationalityXpath))
+        nationalitySelector.select_by_value(nation)
 
+    def __birthdayInput(self, birthday):
+        birthdayXpath = self.__xpath.getPersonalInfoXpathBirthday()
+        birthdayElement = self.__appleIdRegisterBrowser.find_element_by_xpath(birthdayXpath)
+        birthdayElement.clear()
+        birthdayElement.send_keys(birthday)
 
-    def personalInfoInput(self, lastName, firstName, user_birthday):
+    def personalInfoInput(self, lastName, firstName, nation, birthday):
         # Step-1: Load personal info:
 
         # Step-2: Last_name:
-        self.__lastNameInput(self, lastName)
-
+        self.__lastNameInput(lastName)
         # Step-3: First_name:
         self.__firstNameInput(firstName)
-
         # Step-4: Nationality:
-        nationality_xpath = self.__xpath.getPersonalInfoXpathNation()
-        nationality_select = Select(self.__appleIdRegisterBrowser.find_element_by_xpath(nationality_xpath))
-        nationality_value = "USA" # 美国
-        nationality_select.select_by_value(nationality_value)
-
+        nation = "USA"  # 美国
+        self.__nationSelect(nation)
         # Step-5: BirthDay:
-        birthday_xpath = self.__xpath.getPersonalInfoXpathBirthday()
-        birthday_Element = self.__appleIdRegisterBrowser.find_element_by_xpath(birthday_xpath)
-        birthday_Element.clear()
-        birthday_Element.send_keys(user_birthday)
+        self.__birthdayInput(birthday)
+
+    # Input password.
+    def __appleIdEmailInput(self, user_email):
+        appleIdEmailXpath = self.__xpath.getAppleIdEmailXpath()
+        appleIdEmailElement = self.__appleIdRegisterBrowser.find_element_by_xpath(appleIdEmailXpath)
+        appleIdEmailElement.clear()
+        appleIdEmailElement.send_keys(user_email)
+
+    def __passwordFirstInput(self, user_password):
+        passwordFirstInputXpath = self.__xpath.getPasswordFirstInputXpath()
+        passwordFirstInputElement = self.__appleIdRegisterBrowser.find_element_by_xpath(passwordFirstInputXpath)
+        passwordFirstInputElement.clear()
+        passwordFirstInputElement.send_keys(user_password)
+
+    def __passwordConfirm(self, user_password):
+        confirmPasswordXpath = self.__xpath.getPasswordConfirmXpath()
+        confirmPasswordElement = self.__appleIdRegisterBrowser.find_element_by_xpath(confirmPasswordXpath)
+        confirmPasswordElement.clear()
+        confirmPasswordElement.send_keys(user_password)
+
+    def appleIdPasswordInput(self, user_email, user_password):
+        # Step-1: Apple-id (E-mail)
+        self.__appleIdEmailInput(user_email)
+
+        # Step-2: Password:
+        self.__passwordFirstInput(user_password)
+
+        # Step-3: Password confirm:
+        self.__passwordConfirm(user_password)
 
 
-    def appleIdPasswordInput(self, signupInput_xpath_base, user_email, user_password):
-        signupInput_xpath_safeQuestion = signupInput_xpath_base + "/div[4]/div"
-        # Step-4.2.1: Apple-id (E-mail)
-        email_xpath = signupInput_xpath_password + "/div[1]//input[@type='email']"
-        email_Element = self.__appleIdRegisterBrowser.find_element_by_xpath(email_xpath)
-        email_Element.clear()
-        email_Element.send_keys(user_email)
-
-        # Step-4.2.2: Password:
-        password_xpath = signupInput_xpath_password + "/div[2]//new-password//input[@type='password']"
-        password_Element = self.__appleIdRegisterBrowser.find_element_by_xpath(password_xpath)
-        password_Element.clear()
-        password_Element.send_keys(user_password)
-
-        # Step-4.2.3: Password confirm:
-        confirm_password_xpath = signupInput_xpath_password + "/div[2]//confirm-password//input[@type='password']"
-        confirm_password_Element = self.__appleIdRegisterBrowser.find_element_by_xpath(confirm_password_xpath)
-        confirm_password_Element.clear()
-        confirm_password_Element.send_keys(user_password)
-
-
+    # Input safe questions.
+    signupInput_xpath_safeQuestion = signupInput_xpath_base + "/div[4]/div"
     def safeQuestionInput(self, signupInput_xpath_safeQuestion):
         # Step-4.3.1: Safe question - 1:
         safeQuestion_1_xpath_base = signupInput_xpath_safeQuestion + "//security-questions-answers/div/div[1]"
