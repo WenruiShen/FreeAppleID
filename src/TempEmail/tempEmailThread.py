@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 #coding=utf-8
 
+import threading
+
+
 class guerrillamailThread(threading.Thread):
     def __init__(self, threadID, name, counter):
         threading.Thread.__init__(self)
