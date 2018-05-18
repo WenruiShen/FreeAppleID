@@ -9,21 +9,85 @@
 #
 ##############################################
 
+from selenium import webdriver
+import time
+
+from .AppleIdRegisterOpt import appleIdRegisterOpt
 
 
-# Step 3: thrn on the browser
-browser = webdriver.Chrome()
+class appleIdRegisterProcessor:
+
+    def appleIdRegister(self):
+        try:
+            # Open the browser.
+            appleIdRegisterBrowser = webdriver.Chrome()
+            if appleIdRegisterBrowser is None:
+                return False
+            print("Open appleIdRegisterBrowser.")
+
+            self.__appleIdRegisterBody(appleIdRegisterBrowser)
+
+            # Close the browser.
+            appleIdRegisterBrowser.quit()
+            print("Close appleIdRegisterBrowser.")
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
+
+
+    def __appleIdRegisterBody(self, appleIdRegisterBrowser):
+        try:
+
+            self.__appleIdRegisterOperator = appleIdRegisterOpt(appleIdRegisterBrowser)
+
+            # Step-1: Load appleId SignUp page.
+            if not self.__appleIdRegisterOperator.loadAppleIdSignUpPage():
+                return False
+
+            # Step-2: Input personal Info.
+            tempEmailAddr = self.__appleIdRegisterOperator.getTempEmailAddr()
+            if tempEmailAddr is None:
+                return False
+            print("The temp Email addr: " + tempEmailAddr)
 
 
 
-# Step 5: Load the Account Sign up page.
-appleIdBrowser = webdriver.Chrome()
 
-print(appleIdSignUpPageUrl)
-appleIdBrowser.implicitly_wait(5)
-appleIdBrowser.get(appleIdSignUpPageUrl)
-#html = appleIdBrowser.page_source
-#print(html)
+
+            for i in range(3):
+                # Step-3: Recognize the auth img.
+
+                # Step-4: Submit personal info & auth image's code.
+                if False:
+                    continue
+
+                # Step-5: Block wait for the temp email auth code.
+                if False:
+                    continue
+
+                # Step-6: Input & submit temp email auth code.
+                if False:
+                    continue
+                return True
+
+            # Step-7: Store into database.
+            # TODO:
+
+            return False
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
+            return False
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 personalInfoInput(browser, signupInput_xpath_base, lastName, firstName, user_birthday)
@@ -67,7 +131,5 @@ browser.implicitly_wait(5)
 browser.get(accountManageUrl)
 
 
-
-browser.quit()
 
 

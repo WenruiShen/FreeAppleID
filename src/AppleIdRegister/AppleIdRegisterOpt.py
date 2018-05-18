@@ -9,7 +9,12 @@
 #
 ##############################################
 
+import sys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+import re
 
 from .AppleIdRegisterXpath import appleIdRegisterXpath
 from .AppleIdUserInfo import userInfo
@@ -19,6 +24,23 @@ class appleIdRegisterOpt():
         self.__xpath = appleIdRegisterXpath()
         self.__appleIdRegisterBrowser = appleIdRegisterBrowser
         self.__userInfo = userInfo()
+
+    def loadAppleIdSignUpPage(self):
+        appleIdSignUpPageUrl = self.__xpath.getAppleIdSignUpPageUrl()
+        print("Open: " + appleIdSignUpPageUrl)
+        self.__appleIdRegisterBrowser.get(appleIdSignUpPageUrl)
+
+        try:
+            # Explicitly wait.
+            WebDriverWait(self.__appleIdRegisterBrowser, 20, 0.5).until(
+                EC.presence_of_element_located((By.XPATH, self.__xpath.getPersonalInfoXpathLastName()))
+            )
+        except Exception as err:
+            print("Failed to load: " + appleIdSignUpPageUrl, + ", err: " + repr(err))
+            return False
+
+        print("Success to load: " + appleIdSignUpPageUrl)
+        return True
 
 
     # Input personal information for signing up.
@@ -45,15 +67,17 @@ class appleIdRegisterOpt():
         birthdayElement.clear()
         birthdayElement.send_keys(birthday)
 
-    def personalInfoInput(self, lastName, firstName, nation, birthday):
+    def personalInfoInput(self):
         # Step-1: Load personal info:
-
+        lastName =  self.__userInfo.lastName
+        firstName = self.__userInfo.firstName
+        nation =    self.__userInfo.nation
+        birthday =  self.__userInfo.userBirthday
         # Step-2: Last_name:
         self.__lastNameInput(lastName)
         # Step-3: First_name:
         self.__firstNameInput(firstName)
         # Step-4: Nationality:
-        nation = "USA"  # 美国
         self.__nationSelect(nation)
         # Step-5: BirthDay:
         self.__birthdayInput(birthday)
@@ -77,13 +101,13 @@ class appleIdRegisterOpt():
         confirmPasswordElement.clear()
         confirmPasswordElement.send_keys(user_password)
 
-    def appleIdPasswordInput(self, user_email, user_password):
+    def appleIdPasswordInput(self):
+        user_email =    self.__userInfo.userEmail
+        user_password = self.__userInfo.userPassword
         # Step-1: Apple-id (E-mail)
         self.__appleIdEmailInput(user_email)
-
         # Step-2: Password:
         self.__passwordFirstInput(user_password)
-
         # Step-3: Password confirm:
         self.__passwordConfirm(user_password)
 

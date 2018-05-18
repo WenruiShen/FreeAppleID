@@ -26,14 +26,14 @@ class tempEmailListener:
                 return False
             print("Open the browser.")
 
-            return self.__guerrillamailListener(tempEmailBrowser)
+            self.__guerrillamailListener(tempEmailBrowser)
 
-        except Exception as err:
-            print("[ERROR]:" + repr(err))
-        finally:
             # Close the browser.
             tempEmailBrowser.quit()
             print("Close the browser.")
+
+        except Exception as err:
+            print("[ERROR]:" + repr(err))
 
 
     def __guerrillamailListener(self, tempEmailBrowser):
