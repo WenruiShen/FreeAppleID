@@ -74,7 +74,13 @@ class appleIdRegisterXpath():
 
 
     # Safe questions.
+    def __getSafeQuestionXpathBase(self):
+        safeQuestionXpathBase = self.__signupInputXpathBase() + "/div[4]/div"
+        return safeQuestionXpathBase
 
-
-
+    def getOneSafeQuestionXpath(self, questionIndex):
+        oneSafeQuestionXpathBase = self.__getSafeQuestionXpathBase() + "//security-questions-answers/div/div[%s]" % str(questionIndex)
+        oneSafeQuestionXpath = oneSafeQuestionXpathBase + '//select'
+        oneSafeQuestionXpathAnswer = oneSafeQuestionXpathBase + "//input[@type='text']"
+        return oneSafeQuestionXpath, oneSafeQuestionXpathAnswer
 

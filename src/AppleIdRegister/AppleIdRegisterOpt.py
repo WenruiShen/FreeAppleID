@@ -89,49 +89,32 @@ class appleIdRegisterOpt():
 
 
     # Input safe questions.
-    signupInput_xpath_safeQuestion = signupInput_xpath_base + "/div[4]/div"
-    def safeQuestionInput(self, signupInput_xpath_safeQuestion):
-        # Step-4.3.1: Safe question - 1:
-        safeQuestion_1_xpath_base = signupInput_xpath_safeQuestion + "//security-questions-answers/div/div[1]"
-        safeQuestion_1_xpath = safeQuestion_1_xpath_base + '//select'
-        safeQuestion_1_select = Select(self.__appleIdRegisterBrowser.find_element_by_xpath(safeQuestion_1_xpath))
-        safeQuestion_1_value = "130" # 你少年时代最好的朋友叫什么名字？
-        safeQuestion_1_select.select_by_value(safeQuestion_1_value)
+    def __selectOneSafeQuestion(self, questionIndex, safeQuestionValue, answer):
+        # Step-1: select one safe question.
+        oneSafeQuestionXpath, oneSafeQuestionXpathAnswer = self.__xpath.getOneSafeQuestionXpath(questionIndex)
+        safeQuestionSelector = Select(self.__appleIdRegisterBrowser.find_element_by_xpath(oneSafeQuestionXpath))
+        safeQuestionSelector.select_by_value(safeQuestionValue)
 
-        # Step-4.3.2: Safe question - 1 (Answer):
+        # Step-2: Answer this safe question.
+        answerElement = self.__appleIdRegisterBrowser.find_element_by_xpath(oneSafeQuestionXpathAnswer)
+        answerElement.clear()
+        answerElement.send_keys(answer)
+
+    def safeQuestionInput(self):
+        # Safe question - 1:
+        safeQuestionValue_1 = "130"  # 你少年时代最好的朋友叫什么名字？
         answer_1 = "Bob"
-        safeQuestion_1_xpath_answer = safeQuestion_1_xpath_base + "//input[@type='text']"
-        answer_1_Element = self.__appleIdRegisterBrowser.find_element_by_xpath(safeQuestion_1_xpath_answer)
-        answer_1_Element.clear()
-        answer_1_Element.send_keys(answer_1)
+        self.__selectOneSafeQuestion(1, safeQuestionValue_1, answer_1)
 
-        # Step-4.3.3: Safe question - 2:
-        safeQuestion_2_xpath_base = signupInput_xpath_safeQuestion + "//security-questions-answers/div/div[2]"
-        safeQuestion_2_xpath = safeQuestion_2_xpath_base + '//select'
-        safeQuestion_2_select = Select(self.__appleIdRegisterBrowser.find_element_by_xpath(safeQuestion_2_xpath))
-        safeQuestion_2_value = "136" # 你的理想工作是什么？
-        safeQuestion_2_select.select_by_value(safeQuestion_2_value)
-
-        # Step-4.3.4: Safe question - 2 (Answer):
+        # Safe question - 2:
+        safeQuestionValue_2 = "136" # 你的理想工作是什么？
         answer_2 = "Teacher"
-        safeQuestion_2_xpath_answer = safeQuestion_2_xpath_base + "//input[@type='text']"
-        answer_2_Element = self.__appleIdRegisterBrowser.find_element_by_xpath(safeQuestion_2_xpath_answer)
-        answer_2_Element.clear()
-        answer_2_Element.send_keys(answer_2)
+        self.__selectOneSafeQuestion(2, safeQuestionValue_2, answer_2)
 
-        # Step-4.3.5: Safe question - 3:
-        safeQuestion_3_xpath_base = signupInput_xpath_safeQuestion + "//security-questions-answers/div/div[3]"
-        safeQuestion_3_xpath = safeQuestion_3_xpath_base + '//select'
-        safeQuestion_3_select = Select(self.__appleIdRegisterBrowser.find_element_by_xpath(safeQuestion_3_xpath))
-        safeQuestion_3_value = "145" # 你去过的第一个海滨浴场是哪一个？
-        safeQuestion_3_select.select_by_value(safeQuestion_3_value)
-
-        # Step-4.3.6: Safe question - 3 (Answer):
+        # Safe question - 3:
+        safeQuestionValue_3 = "145" # 你去过的第一个海滨浴场是哪一个？
         answer_3 = "Long Beach"
-        safeQuestion_3_xpath_answer = safeQuestion_3_xpath_base + "//input[@type='text']"
-        answer_3_Element = self.__appleIdRegisterBrowser.find_element_by_xpath(safeQuestion_3_xpath_answer)
-        answer_3_Element.clear()
-        answer_3_Element.send_keys(answer_3)
+        self.__selectOneSafeQuestion(3, safeQuestionValue_3, answer_3)
 
 
 
