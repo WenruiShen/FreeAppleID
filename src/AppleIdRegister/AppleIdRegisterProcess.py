@@ -13,10 +13,10 @@ from selenium import webdriver
 import time
 
 from .AppleIdRegisterOpt import appleIdRegisterOpt
+from .AppleIdRegisterAuthImg import appleIdAuthImgOpt
 
 
 class appleIdRegisterProcessor:
-
     def appleIdRegister(self):
         try:
             # Open the browser.
@@ -38,21 +38,24 @@ class appleIdRegisterProcessor:
         try:
 
             self.__appleIdRegisterOperator = appleIdRegisterOpt(appleIdRegisterBrowser)
+            self.__appleIdAuthImgOperator = appleIdAuthImgOpt(appleIdRegisterBrowser)
 
             # Step-1: Load appleId SignUp page.
             if not self.__appleIdRegisterOperator.loadAppleIdSignUpPage():
                 return False
 
             # Step-2: Input personal Info.
-            if not self.__appleIdRegisterOperator.inpuAllInfo():
+            if not self.__appleIdRegisterOperator.inputAllInfo():
                 print("Failed input personal info.")
                 return False
 
             for i in range(3):
-                # Step-3: Recognize the auth img.
+                # Step-3: Recognize the auth img & auth image's code.
+                if not self.__appleIdAuthImgOperator.appleIdAuthImgProcessor():
+                    continue
 
-                # Step-4: Submit personal info & auth image's code.
-                if False:
+                # Step-4: Submit personal info.
+                if not self.__appleIdRegisterOperator.submitPersonalInfo():
                     continue
 
                 # Step-5: Block wait for the temp email auth code.
@@ -81,25 +84,12 @@ class appleIdRegisterProcessor:
 
 
 
-authPenal_xpath = signupInput_xpath_base + "/div[6]/div/create-captcha/div/div/div/div/"
-
-# Step-3: Recognize the Auth img.
-authImgBase64 = extractAuthImg(browser, authPenal_xpath)
-
-#filename='001.jpeg'
-#saveAuthImg(authImgBase64, filename)
-#showAuthImg(filename)
-
-#parsed_auth_code = "CF6MZ"
-parsed_auth_code = authCodeParseRequest(authImgBase64[len('data:image/jpeg;base64, '):])
-print(parsed_auth_code)
-
-parsedCodeInput(browser, authPenal_xpath, parsed_auth_code)
 
 
-# Submit personal information.
-submit_xpath = signup_xpath_base + "//div[@class='idms-flow-container']//div[@class='idms-step-footer clearfix']//button[@type='button']"
-browser.find_element_by_xpath(submit_xpath).click()
+
+
+
+
 
 
 # Input auth code sent to the email.

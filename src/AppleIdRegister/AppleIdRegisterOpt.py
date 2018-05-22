@@ -140,19 +140,26 @@ class appleIdRegisterOpt():
         answer_3 = "Long Beach"
         self.__selectOneSafeQuestion(3, safeQuestionValue_3, answer_3)
 
-    def inpuAllInfo(self):
-        self.personalInfoInput()
-        self.appleIdPasswordInput()
-        self.safeQuestionInput()
-        return True
+    def inputAllInfo(self):
+        try:
+            self.personalInfoInput()
+            self.appleIdPasswordInput()
+            self.safeQuestionInput()
+            return True
+        except Exception as err:
+            print("[ERROR] InputAllInfo Failed: " + repr(err))
+            return False
 
 
-
-
-
-
-
-
+    # Submit personal information.
+    def submitPersonalInfo(self):
+        try:
+            submitXpath = self.__xpath.getSubmitXpath()
+            self.__appleIdRegisterBrowser.find_element_by_xpath(submitXpath).click()
+            return True
+        except Exception as err:
+            print("[ERROR] SubmitPersonalInfo Failed: " + repr(err))
+            return False
 
 
 

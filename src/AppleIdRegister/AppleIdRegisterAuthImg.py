@@ -4,52 +4,70 @@
 ##############################################
 #
 # Author:       Shen Wenrui
-# Date:         20180518
+# Date:         20180522
 # Description:
 #
 ##############################################
 
-
-
-
-
 import base64
-from IPython.display import Image
+#from IPython.display import Image
+import PIL.Image
+
+from .AppleIdRegisterXpath import appleIdRegisterXpath
+from .AutoCodeRecognizeLib import authImgRecongizer
 
 
-# import PIL.Image
+class appleIdAuthImgOpt():
+    def __init__(self, appleIdRegisterBrowser):
+        self.__xpath = appleIdRegisterXpath()
+        self.__appleIdRegisterBrowser = appleIdRegisterBrowser
+        self.__authImgRecongizer = authImgRecongizer()
 
-# Step-2: Get the Auth img.
-def extractAuthImg(browser, authPenal_xpath):
-    authImgBase64_xpath = authPenal_xpath + "/div[1]/div/idms-captcha/div/img"
+    # Auth image.
+    def __extractAuthImg(self):
+        try:
+            authImgBase64Xpath = self.__xpath.getAuthImgBase64Xpath()
 
-    authImgElement = browser.find_element_by_xpath(authImgBase64_xpath)
-    # print('authImgElement is: ' + str(authImgElement.get_attribute('innerHTML')))
+            authImgElement = self.__appleIdRegisterBrowser.find_element_by_xpath(authImgBase64Xpath)
+            # print('authImgElement is: ' + str(authImgElement.get_attribute('innerHTML')))
 
-    authImgBase64 = authImgElement.get_attribute('src')
-    # print(authImgBase64)
-    return authImgBase64
+            authImgBase64 = authImgElement.get_attribute('src')
+            # print(authImgBase64)
+            return authImgBase64
+        except Exception as err:
+            print("[ERROR] ExtractAuthImg Failed: " + repr(err))
+            return None
 
+    def __saveAuthImg(self, authImgBase64, filename='001.jpeg'):
+        authImgStr = base64.b64decode(authImgBase64[len('data:image/jpeg;base64, '):])
+        authImg_f = open("001.jpeg", "wb")
+        authImg_f.write(authImgStr)
+        authImg_f.close()
 
-def saveAuthImg(authImgBase64, filename='001.jpeg'):
-    authImgStr = base64.b64decode(authImgBase64[len('data:image/jpeg;base64, '):])
-    authImg_f = open("001.jpeg", "wb")
-    authImg_f.write(authImgStr)
-    authImg_f.close()
+    #def __showAuthImg(self, filename='001.jpeg'):
+        # Show in jupyter:
+        #Image(filename)
 
+        # show in system:
+        #im = PIL.Image.open('001.jpeg')
+        #im.show()
 
-def showAuthImg(filename='001.jpeg'):
-    # Show in jupyter:
-    Image(filename)
+    def __recognizeAuthImg(self, authImgBase64):
+        parsed_auth_code = self.__authImgRecongizer.authCodeParseRequest(authImgBase64[len('data:image/jpeg;base64, '):])
+        # parsed_auth_code = "CF6MZ"
+        print(parsed_auth_code)
+        return None
 
-    # show in system:
-    # im = PIL.Image.open('001.jpeg')
-    # im.show()
+    def __inputAutnCode(self, recognizedAuthCode):
+        authCodeInputXpath = self.__xpath.getAuthCodeInptuXpath()
+        authCodeInputElement = self.__appleIdRegisterBrowser.find_element_by_xpath(authCodeInputXpath)
+        authCodeInputElement.clear()
+        authCodeInputElement.send_keys(recognizedAuthCode)
+        return False
 
+    def appleIdAuthImgProcessor(self):
+        authImgBase64 = self.__extractAuthImg()
+        recognizedAuthCode = self.__recognizeAuthImg(authImgBase64)
+        self.__inputAutnCode(recognizedAuthCode)
+        return True
 
-def parsedCodeInput(browser, authPenal_xpath, parsed_auth_code):
-    # Input the parsed auth code:
-    authCode_xpath = authPenal_xpath + "/div[2]//input[@type='text']"
-    authCode_Element = browser.find_element_by_xpath(authCode_xpath)
-    authCode_Element.clear()
-    authCode_Element.send_keys(parsed_auth_code)
