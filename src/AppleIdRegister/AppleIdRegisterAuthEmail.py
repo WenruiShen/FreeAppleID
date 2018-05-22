@@ -62,13 +62,15 @@ class appleIdEmailAuthOpt():
             print("[ERROR] InputEmailAuthCode Failed: " + repr(err))
             return False
 
-    def emailAuthCodeListener(self):
+    def emailAuthCodeListener(self, emailAuthCodeQueue):
         try:
             # TODO：
             # 循环阻塞超时等待
+            emailAuthCode = emailAuthCodeQueue.get()
+            print("Queue receive emailAuthCode: " + emailAuthCode)
             # 正则校验
 
-            return None
+            return emailAuthCode
         except Exception as err:
             print("[ERROR] emailAuthCodeListener Failed: " + repr(err))
             return None

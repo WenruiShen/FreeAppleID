@@ -22,7 +22,7 @@ class appleIdRegisterProcessor:
     def __init__(self):
         self.__userInfo = userInfo()
 
-    def appleIdRegister(self, userEmail):
+    def appleIdRegister(self, userEmail, emailAuthCodeQueue):
         try:
             self.__userInfo.initUserEmail(userEmail)
 
@@ -32,7 +32,7 @@ class appleIdRegisterProcessor:
                 return False
             print("Open appleIdRegisterBrowser.")
 
-            self.__appleIdRegisterBody(appleIdRegisterBrowser)
+            self.__appleIdRegisterBody(appleIdRegisterBrowser, emailAuthCodeQueue)
 
             # Close the browser.
             appleIdRegisterBrowser.quit()
@@ -41,7 +41,7 @@ class appleIdRegisterProcessor:
             print("[ERROR]:" + repr(err))
 
 
-    def __appleIdRegisterBody(self, appleIdRegisterBrowser):
+    def __appleIdRegisterBody(self, appleIdRegisterBrowser, emailAuthCodeQueue):
         try:
             self.__appleIdRegisterOperator = appleIdRegisterOpt(appleIdRegisterBrowser)
             self.__appleIdAuthImgOperator = appleIdAuthImgOpt(appleIdRegisterBrowser)
@@ -66,7 +66,7 @@ class appleIdRegisterProcessor:
                     continue
 
                 # Step-5: Block wait for the temp email auth code.
-                emailAuthCode = self.__appleIdEmailAuthOperator.emailAuthCodeListener()
+                emailAuthCode = self.__appleIdEmailAuthOperator.emailAuthCodeListener(emailAuthCodeQueue)
                 if emailAuthCode is None :
                     continue
 
