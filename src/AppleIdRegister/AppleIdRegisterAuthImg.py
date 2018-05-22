@@ -54,21 +54,39 @@ class appleIdAuthImgOpt():
         #im.show()
 
     def __recognizeAuthImg(self, authImgBase64):
-        parsed_auth_code = self.__authImgRecongizer.authCodeParseRequest(authImgBase64[len('data:image/jpeg;base64, '):])
-        # parsed_auth_code = "CF6MZ"
-        print(parsed_auth_code)
-        return None
+        try:
+            recognizedAuthCode = self.__authImgRecongizer.authCodeParseRequest(authImgBase64[len('data:image/jpeg;base64, '):])
+            # recognizedAuthCode = "CF6MZ"
+            print(recognizedAuthCode)
+            # 正则判断：
+            # TODO:
 
-    def __inputAutnCode(self, recognizedAuthCode):
-        authCodeInputXpath = self.__xpath.getAuthCodeInptuXpath()
-        authCodeInputElement = self.__appleIdRegisterBrowser.find_element_by_xpath(authCodeInputXpath)
-        authCodeInputElement.clear()
-        authCodeInputElement.send_keys(recognizedAuthCode)
-        return False
+            return recognizedAuthCode
+        except Exception as err:
+            print("[ERROR] __recognizeAuthImg Failed: " + repr(err))
+            return None
+
+    def __inputAuthCode(self, recognizedAuthCode):
+        try:
+            authCodeInputXpath = self.__xpath.getAuthCodeInptuXpath()
+            authCodeInputElement = self.__appleIdRegisterBrowser.find_element_by_xpath(authCodeInputXpath)
+            authCodeInputElement.clear()
+            authCodeInputElement.send_keys(recognizedAuthCode)
+            return True
+        except Exception as err:
+            print("[ERROR] __inputAuthCode Failed: " + repr(err))
+            return False
 
     def appleIdAuthImgProcessor(self):
         authImgBase64 = self.__extractAuthImg()
+        if authImgBase64 is None:
+            return False
+
         recognizedAuthCode = self.__recognizeAuthImg(authImgBase64)
-        self.__inputAutnCode(recognizedAuthCode)
+        if recognizedAuthCode is None:
+            return False
+
+        if not self.__inputAuthCode(recognizedAuthCode):
+            return False
         return True
 

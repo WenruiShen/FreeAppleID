@@ -15,9 +15,9 @@ from selenium import webdriver
 import time
 
 from .tempEmailParser import tempEmailParser
+from ..AppleIdRegister.AppleIdRegisterThread import appleIdRegisterThread
 
 class tempEmailListener:
-
     def guerrillamailBrowser(self):
         try:
             # Open the browser.
@@ -57,6 +57,10 @@ class tempEmailListener:
 
             # Step-4: Start the thread of applying appleId.
             print("Now start the thread of Applying Apple ID!")
+            # 创建新线程
+            thread2 = appleIdRegisterThread(2, "Thread-2", 1, tempEmailAddr)
+            # 开启新线程
+            thread2.start()
 
             while True:
                 # Step-5: Whether register appleId success.

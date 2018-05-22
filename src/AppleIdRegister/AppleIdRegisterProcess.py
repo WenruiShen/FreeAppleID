@@ -12,14 +12,20 @@
 from selenium import webdriver
 import time
 
+from .AppleIdUserInfo import userInfo
 from .AppleIdRegisterOpt import appleIdRegisterOpt
 from .AppleIdRegisterAuthImg import appleIdAuthImgOpt
 from .AppleIdRegisterAuthEmail import appleIdEmailAuthOpt
 
 
 class appleIdRegisterProcessor:
-    def appleIdRegister(self):
+    def __init__(self):
+        self.__userInfo = userInfo()
+
+    def appleIdRegister(self, userEmail):
         try:
+            self.__userInfo.initUserEmail(userEmail)
+
             # Open the browser.
             appleIdRegisterBrowser = webdriver.Chrome()
             if appleIdRegisterBrowser is None:

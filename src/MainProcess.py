@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #coding=utf-8
 
-from TempEmail.tempEmailThread import guerrillamailThread
+from .TempEmail.tempEmailThread import guerrillamailThread
 
 
 # 创建新线程

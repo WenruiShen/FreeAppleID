@@ -18,3 +18,5 @@ class userInfo():
         self.userEmail = "c3uiya+8tysatee8mklw@sharklasers.com"
         self.nation = "USA"  # 美国
 
+    def initUserEmail(self, tempEmailAddr):
+        self.userEmail = tempEmailAddr

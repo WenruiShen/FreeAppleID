@@ -16,13 +16,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 
 from .AppleIdRegisterXpath import appleIdRegisterXpath
-from .AppleIdUserInfo import userInfo
 
 class appleIdRegisterOpt():
     def __init__(self, appleIdRegisterBrowser):
         self.__xpath = appleIdRegisterXpath()
         self.__appleIdRegisterBrowser = appleIdRegisterBrowser
-        self.__userInfo = userInfo()
 
     def loadAppleIdSignUpPage(self):
         appleIdSignUpPageUrl = self.__xpath.getAppleIdSignUpPageUrl()
@@ -66,12 +64,12 @@ class appleIdRegisterOpt():
         birthdayElement.clear()
         birthdayElement.send_keys(birthday)
 
-    def personalInfoInput(self):
+    def personalInfoInput(self, userInfo):
         # Step-1: Load personal info:
-        lastName =  self.__userInfo.lastName
-        firstName = self.__userInfo.firstName
-        nation =    self.__userInfo.nation
-        birthday =  self.__userInfo.userBirthday
+        lastName =  userInfo.lastName
+        firstName = userInfo.firstName
+        nation =    userInfo.nation
+        birthday =  userInfo.userBirthday
         # Step-2: Last_name:
         self.__lastNameInput(lastName)
         # Step-3: First_name:
@@ -100,9 +98,9 @@ class appleIdRegisterOpt():
         confirmPasswordElement.clear()
         confirmPasswordElement.send_keys(user_password)
 
-    def appleIdPasswordInput(self):
-        user_email =    self.__userInfo.userEmail
-        user_password = self.__userInfo.userPassword
+    def appleIdPasswordInput(self, userInfo):
+        user_email =    userInfo.userEmail
+        user_password = userInfo.userPassword
         # Step-1: Apple-id (E-mail)
         self.__appleIdEmailInput(user_email)
         # Step-2: Password:
@@ -139,10 +137,10 @@ class appleIdRegisterOpt():
         answer_3 = "Long Beach"
         self.__selectOneSafeQuestion(3, safeQuestionValue_3, answer_3)
 
-    def inputAllInfo(self):
+    def inputAllInfo(self, userInfo):
         try:
-            self.personalInfoInput()
-            self.appleIdPasswordInput()
+            self.personalInfoInput(userInfo)
+            self.appleIdPasswordInput(userInfo)
             self.safeQuestionInput()
             return True
         except Exception as err:
@@ -155,6 +153,9 @@ class appleIdRegisterOpt():
         try:
             submitXpath = self.__xpath.getSubmitXpath()
             self.__appleIdRegisterBrowser.find_element_by_xpath(submitXpath).click()
+            # Explicitly wait.
+            # TODO:
+
             return True
         except Exception as err:
             print("[ERROR] SubmitPersonalInfo Failed: " + repr(err))

@@ -66,6 +66,8 @@ class appleIdEmailAuthOpt():
         try:
             # TODO：
             # 循环阻塞超时等待
+            # 正则校验
+
             return None
         except Exception as err:
             print("[ERROR] emailAuthCodeListener Failed: " + repr(err))
