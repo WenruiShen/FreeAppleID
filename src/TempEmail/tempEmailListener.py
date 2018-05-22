@@ -58,7 +58,7 @@ class tempEmailListener:
             # Step-4: Start the thread of applying appleId.
             print("Now start the thread of Applying Apple ID!")
             # 创建新线程
-            thread2 = appleIdRegisterThread(2, "Thread-2", 1, tempEmailAddr)
+            thread2 = appleIdRegisterThread(2, "Thread-2", tempEmailAddr)
             # 开启新线程
             thread2.start()
 
@@ -66,6 +66,8 @@ class tempEmailListener:
                 # Step-5: Whether register appleId success.
 
                 # Step-6: Whether thread-2 is stopped.
+                if not thread2.isAlive():
+                    return False
 
                 # Step-7: Blockly listen to the inbox.
                 authCode = self.__waitAuthCode()

@@ -15,12 +15,11 @@ import threading
 from .AppleIdRegisterProcess import appleIdRegisterProcessor
 
 class appleIdRegisterThread(threading.Thread):
-    def __init__(self, threadID, name, counter, userEmail):
+    def __init__(self, threadID, name, userEmail):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.name = name
-        self.counter = counter
-        self.userEmail
+        self.userEmail = userEmail
 
     def run(self):
         print("开启线程： " + self.name)
