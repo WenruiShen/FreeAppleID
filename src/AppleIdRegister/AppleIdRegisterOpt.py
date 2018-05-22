@@ -14,7 +14,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
-import re
 
 from .AppleIdRegisterXpath import appleIdRegisterXpath
 from .AppleIdUserInfo import userInfo
@@ -162,4 +161,11 @@ class appleIdRegisterOpt():
             return False
 
 
-
+    # Load into apple account manage page.
+    def loadAppleAccountManagePage(self):
+        appleAccountManageUrl = self.__xpath.getAppleAccountManagePageUrl()
+        print("Open: " + appleAccountManageUrl)
+        # Explicitly wait.
+        self.__appleIdRegisterBrowser.implicitly_wait(5)
+        self.__appleIdRegisterBrowser.get(appleAccountManageUrl)
+        return True

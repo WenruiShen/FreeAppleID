@@ -14,6 +14,7 @@ import time
 
 from .AppleIdRegisterOpt import appleIdRegisterOpt
 from .AppleIdRegisterAuthImg import appleIdAuthImgOpt
+from .AppleIdRegisterAuthEmail import appleIdEmailAuthOpt
 
 
 class appleIdRegisterProcessor:
@@ -36,9 +37,9 @@ class appleIdRegisterProcessor:
 
     def __appleIdRegisterBody(self, appleIdRegisterBrowser):
         try:
-
             self.__appleIdRegisterOperator = appleIdRegisterOpt(appleIdRegisterBrowser)
             self.__appleIdAuthImgOperator = appleIdAuthImgOpt(appleIdRegisterBrowser)
+            self.__appleIdEmailAuthOperator = appleIdEmailAuthOpt(appleIdRegisterBrowser)
 
             # Step-1: Load appleId SignUp page.
             if not self.__appleIdRegisterOperator.loadAppleIdSignUpPage():
@@ -59,11 +60,15 @@ class appleIdRegisterProcessor:
                     continue
 
                 # Step-5: Block wait for the temp email auth code.
-                if False:
+                emailAuthCode = self.__appleIdEmailAuthOperator.emailAuthCodeListener()
+                if emailAuthCode is None :
                     continue
 
                 # Step-6: Input & submit temp email auth code.
-                if False:
+                if not self.__appleIdEmailAuthOperator.inputEmailAuthCode(emailAuthCode):
+                    # Exit Email code input page.
+                    # TODO:
+
                     continue
                 return True
 
@@ -74,38 +79,3 @@ class appleIdRegisterProcessor:
         except Exception as err:
             print("[ERROR]:" + repr(err))
             return False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Input auth code sent to the email.
-browser.implicitly_wait(3)
-userInputEmailAuthCode(browser, userInputAuthCode = "966412")
-
-
-
-# - 2nd - Page:
-
-accountManageUrl = "https://appleid.apple.com/account/manage"
-print(accountManageUrl)
-
-browser.implicitly_wait(5)
-browser.get(accountManageUrl)
-
-
-
-

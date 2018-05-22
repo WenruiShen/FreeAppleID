@@ -11,7 +11,8 @@
 
 import base64
 #from IPython.display import Image
-import PIL.Image
+#import PIL.Image
+import re
 
 from .AppleIdRegisterXpath import appleIdRegisterXpath
 from .AutoCodeRecognizeLib import authImgRecongizer

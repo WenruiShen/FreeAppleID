@@ -13,16 +13,21 @@
 class appleIdRegisterXpath():
     def __init__(self):
         self.__appleHomepageUrl = 'https://www.apple.com/cn/'
-        # Apple-Id Signin page
+        # Apple-Id Signin page.
         self.__appleIdHomePageUrl = 'https://appleid.apple.com'
-        # Apple-Id Signup page
+        # Apple-Id Signup page.
         self.__appleIdSignUpPageUrl = self.appleIdHomePageUrl + '/account'
+        # Apple Account Manage page.
+        self.__appleAccountManageUrl = self.__appleIdSignUpPageUrl + '/manage'
 
         self.__signupXpathBase = "/html/body/div[@id='content']/aid-web/div[@class='app-container']/div[@id='app-content']/" \
                             "div[@id='flow']/create-app/aid-create"
 
     def getAppleIdSignUpPageUrl(self):
         return self.__appleIdSignUpPageUrl
+
+    def getAppleAccountManagePageUrl(self):
+        return self.__appleAccountManageUrl
 
     def __getsignupXpathBase(self):
         return self.__signupXpathBase
@@ -102,5 +107,24 @@ class appleIdRegisterXpath():
         submitXpath = self.__getsignupXpathBase() + "//div[@class='idms-flow-container']//" \
                                                     "div[@class='idms-step-footer clearfix']//button[@type='button']"
         return submitXpath
+
+    # Email Auth Code.
+    def __getEmailAuthCodeXpathBase(self):
+        emailAuthCode_xpath_base = "/html/body//step-verify-code"
+        return emailAuthCode_xpath_base
+
+    def __getEmailAuthCodeXpathLine(self):
+        emailAuthCodeXpathLine = self.__getEmailAuthCodeXpathBase() + "//div[@class='security-code-container force-ltr']"
+        return emailAuthCodeXpathLine
+
+    def getEmailAuthCodeXpathInput(self, index):
+        emailAuthCodeXpathInput = self.__getEmailAuthCodeXpathLine() + "/div[%s]/input" % index
+        return emailAuthCodeXpathInput
+
+    def getSubmitEmailAuthCodeXpathButtonOk(self):
+        submitEmailAuthCodeXpathButtonOk = self.__getEmailAuthCodeXpathBase() + \
+                                   "//div[@class='button-group flow-controls clearfix pull-right ']/button[1]"
+        return submitEmailAuthCodeXpathButtonOk
+
 
 
