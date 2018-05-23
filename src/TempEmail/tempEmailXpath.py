@@ -58,7 +58,3 @@ class tempEmailXpath():
     def getLatestEmailContentXpath(self):
         latestEmailContent_xpath = self.getEmailContentXpath() + "[%d]/td[@class='td3']/span[@class='email-excerpt']" % 1
         return latestEmailContent_xpath
-
-
-#tempEmail = tempEmailXpath()
-#print(tempEmail.getTempEmailAddrXpath())
