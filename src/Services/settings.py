@@ -11,11 +11,10 @@
 
 from __future__ import absolute_import, unicode_literals
 import os
-import datetime
-import logging
+
 	
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Database
@@ -32,7 +31,7 @@ DATABASES = {
 
 
 # Setting for Django-Python logging framework.
-LOGGING_PATH = os.path.join(BASE_DIR, 'django_logging_files')
+LOGGING_PATH = os.path.join(BASE_DIR, 'logs')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

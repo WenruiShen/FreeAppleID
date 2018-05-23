@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 #coding=utf-8
 
-from .TempEmail.tempEmailThread import guerrillamailThread
-from .Services import settings
+from src.TempEmail.tempEmailThread import guerrillamailThread
+from src.Services.loggingInit import setup_logging
 
+setup_logging()
 
 # 创建新线程
 thread1 = guerrillamailThread(1, "Thread-1")
