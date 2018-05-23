@@ -18,7 +18,7 @@ from .AppleIdRegisterAuthImg import appleIdAuthImgOpt
 from .AppleIdRegisterAuthEmail import appleIdEmailAuthOpt
 
 
-class appleIdRegisterProcessor:
+class appleIdRegisterProcessor():
     def __init__(self):
         self.__userInfo = userInfo()
 

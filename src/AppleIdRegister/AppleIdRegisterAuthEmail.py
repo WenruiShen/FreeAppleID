@@ -64,11 +64,11 @@ class appleIdEmailAuthOpt():
 
     def emailAuthCodeListener(self, emailAuthCodeQueue):
         try:
-            # TODO：
-            # 循环阻塞超时等待
-            emailAuthCode = emailAuthCodeQueue.get()
+            # 阻塞等待2min
+            emailAuthCode = emailAuthCodeQueue.get(timeout=120.0)
             print("Queue receive emailAuthCode: " + emailAuthCode)
             # 正则校验
+            # TODO：
 
             return emailAuthCode
         except Exception as err:

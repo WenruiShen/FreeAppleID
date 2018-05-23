@@ -2,6 +2,7 @@
 #coding=utf-8
 
 from .TempEmail.tempEmailThread import guerrillamailThread
+from .Services import settings
 
 
 # 创建新线程
