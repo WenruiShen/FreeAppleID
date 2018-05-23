@@ -2,8 +2,11 @@
 #coding=utf-8
 
 import threading
+import logging
 
 from .tempEmailListener import tempEmailListener
+
+logger = logging.getLogger("tempEmail")
 
 class guerrillamailThread(threading.Thread):
     def __init__(self, threadID, name):
@@ -12,11 +15,11 @@ class guerrillamailThread(threading.Thread):
         self.name = name
 
     def run(self):
-        print("开启线程： " + self.name)
-        print("Start the Main process: applying temp email.")
+        logger.info("开启线程: " + self.name)
+        logger.info("Start the Main process: applying temp email.")
 
         guerrillamail = tempEmailListener()
         guerrillamail.guerrillamailBrowser()
 
-        print("结束线程： " + self.name)
-        print("End the Main process.")
+        logger.info("结束线程： " + self.name)
+        logger.info("End the Main process.")

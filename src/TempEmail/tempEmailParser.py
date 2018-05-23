@@ -18,6 +18,8 @@ import re
 
 from .tempEmailXpath import tempEmailXpath
 
+import logging
+logger = logging.getLogger("tempEmail")
 
 class tempEmailParser():
     def __init__(self, tempEmailBrowser):
@@ -38,10 +40,10 @@ class tempEmailParser():
             emailAddr_xpath = self.__xpath.getTempEmailAddrXpath()
             tempEmailAddr = self.__tempEmailBrowser.find_element_by_xpath(emailAddr_xpath).text
             if not re.match(r'.+?@.+?\.com', tempEmailAddr):
-                print("Illegal tempEmailAddr: " + tempEmailAddr)
+                logger.info("Illegal tempEmailAddr: " + tempEmailAddr)
                 tempEmailAddr = None
         except Exception as err:
-            print("[ERROR]:" + repr(err))
+            logger.error(repr(err))
             tempEmailAddr = None
         return tempEmailAddr
 
@@ -53,7 +55,7 @@ class tempEmailParser():
             emailElementList = self.__tempEmailBrowser.find_elements_by_xpath(emailContent_xpath)
             return len(emailElementList)
         except Exception as err:
-            print("[ERROR]:" + repr(err))
+            logger.error(repr(err))
             return 0
 
     def getLatestEmailDat(self):
@@ -63,7 +65,7 @@ class tempEmailParser():
             latestEmailDate = self.__tempEmailBrowser.find_element_by_xpath(latestEmailDate_xpath).text
             return latestEmailDate
         except Exception as err:
-            print("[ERROR]:" + repr(err))
+            logger.error(repr(err))
             return None
 
     def getInboxInfo(self):
@@ -80,7 +82,7 @@ class tempEmailParser():
             remainUpdateSec = remainUpdateSec[0] if len(remainUpdateSec)!=0 else '0'
             return int(remainUpdateSec)
         except Exception as err:
-            print("[ERROR]:" + repr(err))
+            logger.error(repr(err))
             return None
 
     def getLatestEmailAuthCode(self):
@@ -93,13 +95,13 @@ class tempEmailParser():
 
             return latestEmailContent
         except Exception as err:
-            print("[ERROR]:" + repr(err))
+            logger.error(repr(err))
             return None
 
     # Load the email page and wait explicitly.
     def loadTempEamilPage(self):
         guerrillamailUrl = self.__xpath.getGuerrillamailUrl()
-        print("Open:" + guerrillamailUrl)
+        logger.info("Open:" + guerrillamailUrl)
         self.__tempEmailBrowser.get(guerrillamailUrl)
 
         try:
@@ -108,8 +110,8 @@ class tempEmailParser():
                 EC.presence_of_element_located((By.XPATH, self.__xpath.getTempEmailAddrXpath()))
             )
         except Exception as err:
-            print("Failed to load: " + guerrillamailUrl, + ", err: " + repr(err))
+            logger.error("Failed to load: " + guerrillamailUrl, + ", err: " + repr(err))
             return False
 
-        print("Success to load: " + guerrillamailUrl)
+        logger.info("Success to load: " + guerrillamailUrl)
         return True

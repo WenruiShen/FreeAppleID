@@ -36,11 +36,8 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-        },
         'standard': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+            'format': '%(levelname)s %(asctime)s %(message)s'
         },
         'simple': {
             'format': '%(levelname)s %(message)s'
@@ -57,24 +54,28 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'formatter': 'standard',
             'filename': os.path.join(LOGGING_PATH, 'appleIdRegister.log'),
+            'encoding': 'utf8'
         },
         'appleStoreReviewFile': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'standard',
             'filename': os.path.join(LOGGING_PATH, 'appleStoreReview.log'),
+            'encoding': 'utf8'
         },
         'tempEmailFile': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'standard',
             'filename': os.path.join(LOGGING_PATH, 'tempEmail.log'),
+            'encoding': 'utf8'
         },
         'payAddrExtractFile': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'standard',
             'filename': os.path.join(LOGGING_PATH, 'payAddrExtract.log'),
+            'encoding': 'utf8'
         },
     },
     'loggers': {

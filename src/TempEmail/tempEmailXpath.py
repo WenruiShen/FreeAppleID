@@ -11,6 +11,9 @@
 
 import sys
 
+import logging
+logger = logging.getLogger("tempEmail")
+
 class tempEmailXpath():
     def __init__(self):
         self.guerrillamailUrl = 'https://www.guerrillamail.com/inbox'
