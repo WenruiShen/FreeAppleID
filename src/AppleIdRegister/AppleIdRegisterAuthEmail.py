@@ -16,6 +16,9 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from .AppleIdRegisterXpath import appleIdRegisterXpath
 
+import logging
+logger = logging.getLogger("appleIdRegister")
+
 class appleIdEmailAuthOpt():
     def __init__(self, appleIdRegisterBrowser):
         self.__xpath = appleIdRegisterXpath()
@@ -31,7 +34,7 @@ class appleIdEmailAuthOpt():
             authCodeInputElement.clear()
             authCodeInputElement.send_keys(num)
         except Exception as err:
-            print("[ERROR] __inputOneNumber Failed: " + repr(err))
+            logger.error("__inputOneNumber Failed: " + repr(err))
             return None
 
     def __inputCode(self, emailAuthCode):
@@ -51,7 +54,7 @@ class appleIdEmailAuthOpt():
             )
             return True
         except Exception as err:
-            print("[ERROR] __submitAuthCode Failed: " + repr(err))
+            logger.error("__submitAuthCode Failed: " + repr(err))
             return False
 
     def inputEmailAuthCode(self, emailAuthCode = "123456"):
@@ -59,18 +62,18 @@ class appleIdEmailAuthOpt():
             self.__inputCode(emailAuthCode)
             return self.__submitAuthCode()
         except Exception as err:
-            print("[ERROR] InputEmailAuthCode Failed: " + repr(err))
+            logger.error("InputEmailAuthCode Failed: " + repr(err))
             return False
 
     def emailAuthCodeListener(self, emailAuthCodeQueue):
         try:
             # 阻塞等待2min
             emailAuthCode = emailAuthCodeQueue.get(timeout=120.0)
-            print("Queue receive emailAuthCode: " + emailAuthCode)
+            logger.info("Queue receive emailAuthCode: " + emailAuthCode)
             # 正则校验
             # TODO：
 
             return emailAuthCode
         except Exception as err:
-            print("[ERROR] emailAuthCodeListener Failed: " + repr(err))
+            logger.error("emailAuthCodeListener Failed: " + repr(err))
             return None

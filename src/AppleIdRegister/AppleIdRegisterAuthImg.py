@@ -17,6 +17,8 @@ import re
 from .AppleIdRegisterXpath import appleIdRegisterXpath
 from .AutoCodeRecognizeLib import authImgRecongizer
 
+import logging
+logger = logging.getLogger("appleIdRegister")
 
 class appleIdAuthImgOpt():
     def __init__(self, appleIdRegisterBrowser):
@@ -30,13 +32,13 @@ class appleIdAuthImgOpt():
             authImgBase64Xpath = self.__xpath.getAuthImgBase64Xpath()
 
             authImgElement = self.__appleIdRegisterBrowser.find_element_by_xpath(authImgBase64Xpath)
-            # print('authImgElement is: ' + str(authImgElement.get_attribute('innerHTML')))
+            # logger.info('authImgElement is: ' + str(authImgElement.get_attribute('innerHTML')))
 
             authImgBase64 = authImgElement.get_attribute('src')
-            # print(authImgBase64)
+            # logger.info(authImgBase64)
             return authImgBase64
         except Exception as err:
-            print("[ERROR] ExtractAuthImg Failed: " + repr(err))
+            logger.error("ExtractAuthImg Failed: " + repr(err))
             return None
 
     def __saveAuthImg(self, authImgBase64, filename='001.jpeg'):
@@ -57,13 +59,13 @@ class appleIdAuthImgOpt():
         try:
             recognizedAuthCode = self.__authImgRecongizer.authCodeParseRequest(authImgBase64[len('data:image/jpeg;base64, '):])
             # recognizedAuthCode = "CF6MZ"
-            print(recognizedAuthCode)
+            logger.info(recognizedAuthCode)
             # 正则判断：
             # TODO:
 
             return recognizedAuthCode
         except Exception as err:
-            print("[ERROR] __recognizeAuthImg Failed: " + repr(err))
+            logger.error("__recognizeAuthImg Failed: " + repr(err))
             return None
 
     def __inputAuthCode(self, recognizedAuthCode):
@@ -74,7 +76,7 @@ class appleIdAuthImgOpt():
             authCodeInputElement.send_keys(recognizedAuthCode)
             return True
         except Exception as err:
-            print("[ERROR] __inputAuthCode Failed: " + repr(err))
+            logger.error("__inputAuthCode Failed: " + repr(err))
             return False
 
     def appleIdAuthImgProcessor(self):

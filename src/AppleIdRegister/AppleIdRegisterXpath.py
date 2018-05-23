@@ -9,6 +9,8 @@
 #
 ##############################################
 
+import logging
+logger = logging.getLogger("appleIdRegister")
 
 class appleIdRegisterXpath():
     def __init__(self):

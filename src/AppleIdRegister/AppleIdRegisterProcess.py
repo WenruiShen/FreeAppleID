@@ -17,6 +17,8 @@ from .AppleIdRegisterOpt import appleIdRegisterOpt
 from .AppleIdRegisterAuthImg import appleIdAuthImgOpt
 from .AppleIdRegisterAuthEmail import appleIdEmailAuthOpt
 
+import logging
+logger = logging.getLogger("appleIdRegister")
 
 class appleIdRegisterProcessor():
     def __init__(self):
@@ -30,15 +32,15 @@ class appleIdRegisterProcessor():
             appleIdRegisterBrowser = webdriver.Chrome()
             if appleIdRegisterBrowser is None:
                 return False
-            print("Open appleIdRegisterBrowser.")
+            logger.info("Open appleIdRegisterBrowser.")
 
             self.__appleIdRegisterBody(appleIdRegisterBrowser, emailAuthCodeQueue)
 
             # Close the browser.
             appleIdRegisterBrowser.quit()
-            print("Close appleIdRegisterBrowser.")
+            logger.info("Close appleIdRegisterBrowser.")
         except Exception as err:
-            print("[ERROR]:" + repr(err))
+            logger.error(repr(err))
 
 
     def __appleIdRegisterBody(self, appleIdRegisterBrowser, emailAuthCodeQueue):
@@ -53,7 +55,7 @@ class appleIdRegisterProcessor():
 
             # Step-2: Input personal Info.
             if not self.__appleIdRegisterOperator.inputAllInfo():
-                print("Failed input personal info.")
+                logger.info("Failed input personal info.")
                 return False
 
             for i in range(3):
@@ -83,5 +85,5 @@ class appleIdRegisterProcessor():
 
             return False
         except Exception as err:
-            print("[ERROR]:" + repr(err))
+            logger.error(repr(err))
             return False

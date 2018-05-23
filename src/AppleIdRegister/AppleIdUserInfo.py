@@ -9,6 +9,9 @@
 #
 ##############################################
 
+import logging
+logger = logging.getLogger("appleIdRegister")
+
 class userInfo():
     def __init__(self):
         self.firstName = 'Test'

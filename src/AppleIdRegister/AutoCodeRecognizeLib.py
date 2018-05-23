@@ -12,6 +12,8 @@
 import json, urllib
 from urllib import parse
 
+import logging
+logger = logging.getLogger("appleIdRegister")
 
 class authImgRecongizer():
     def __init__(self):

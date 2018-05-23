@@ -17,6 +17,9 @@ from selenium.webdriver.support.ui import Select
 
 from .AppleIdRegisterXpath import appleIdRegisterXpath
 
+import logging
+logger = logging.getLogger("appleIdRegister")
+
 class appleIdRegisterOpt():
     def __init__(self, appleIdRegisterBrowser):
         self.__xpath = appleIdRegisterXpath()
@@ -24,7 +27,7 @@ class appleIdRegisterOpt():
 
     def loadAppleIdSignUpPage(self):
         appleIdSignUpPageUrl = self.__xpath.getAppleIdSignUpPageUrl()
-        print("Open: " + appleIdSignUpPageUrl)
+        logger.info("Open: " + appleIdSignUpPageUrl)
         self.__appleIdRegisterBrowser.get(appleIdSignUpPageUrl)
 
         try:
@@ -33,10 +36,10 @@ class appleIdRegisterOpt():
                 EC.presence_of_element_located((By.XPATH, self.__xpath.getPersonalInfoXpathLastName()))
             )
         except Exception as err:
-            print("Failed to load: " + appleIdSignUpPageUrl, + ", err: " + repr(err))
+            logger.error("Failed to load: " + appleIdSignUpPageUrl, + ", err: " + repr(err))
             return False
 
-        print("Success to load: " + appleIdSignUpPageUrl)
+        logger.info("Success to load: " + appleIdSignUpPageUrl)
         return True
 
 
@@ -144,7 +147,7 @@ class appleIdRegisterOpt():
             self.safeQuestionInput()
             return True
         except Exception as err:
-            print("[ERROR] InputAllInfo Failed: " + repr(err))
+            logger.error("InputAllInfo Failed: " + repr(err))
             return False
 
 
@@ -158,14 +161,14 @@ class appleIdRegisterOpt():
 
             return True
         except Exception as err:
-            print("[ERROR] SubmitPersonalInfo Failed: " + repr(err))
+            logger.error("SubmitPersonalInfo Failed: " + repr(err))
             return False
 
 
     # Load into apple account manage page.
     def loadAppleAccountManagePage(self):
         appleAccountManageUrl = self.__xpath.getAppleAccountManagePageUrl()
-        print("Open: " + appleAccountManageUrl)
+        logger.info("Open: " + appleAccountManageUrl)
         # Explicitly wait.
         self.__appleIdRegisterBrowser.implicitly_wait(5)
         self.__appleIdRegisterBrowser.get(appleAccountManageUrl)
