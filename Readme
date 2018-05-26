@@ -39,8 +39,16 @@ Please operate as follows:
     [6].https://developer.apple.com/library/content/documentation/Accessibility/Conceptual/AccessibilityMacOSX/OSXAXTestingApps.html
     [7].http://www.macosxautomation.com/applescript/uiscripting/
 
-5.
+5. Install MySQLdb:
+    pip3 install PyMySQL
+    pip3 install mysql-connector
 
+    database configs:   username: root
+                        password: dbfreeid2018
+                        database: FreeAppleIdDB
+
+    refer:
+    [1].http://www.runoob.com/python3/python3-mysql.html
 
 
 
