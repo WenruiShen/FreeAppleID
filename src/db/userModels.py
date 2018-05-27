@@ -12,30 +12,28 @@
 import mysql.connector
 import logging
 
-# Database
-DATABASES_CONFIGS = {
-            'user':'freeapple',
-            'password':'dbfreeid2018',
-            'db':'FreeAppleIdDB',
-            'host':'localhost',
-            'port':3306,
-            'charset':'utf8'
-}
+from .dbsettings import dbconnector_freeId
 
 logger = logging.getLogger("database")
 
-# 打开数据库连接
-db = mysql.connector.connect(**DATABASES_CONFIGS)
+
 
 class userModels():
-    def __index__(self):
-        self.__db = db
+    def __init__(self):
+        self.__db = dbconnector_freeId
 
-    #def insertNewUserInfo(self):
+    def dbTest(self):
+        # 使用 cursor() 方法创建一个游标对象 cursor
+        cursor = self.__db.cursor()
+        # 使用 execute()  方法执行 SQL 查询
+        cursor.execute("SELECT VERSION()")
+        # 使用 fetchone() 方法获取单条数据.
+        data = cursor.fetchone()
+        logger.info("Database version : %s " % data)
 
     def getAllUserInfo(self):
         # 使用 cursor() 方法创建一个游标对象 cursor
-        cursor = db.cursor()
+        cursor = self.__db.cursor()
 
         # SQL 查询语句
         sql = "SELECT * FROM FreeAppleIdUserInfo "
@@ -45,6 +43,7 @@ class userModels():
             cursor.execute(sql)
             # 获取所有记录列表
             results = cursor.fetchall()
+            logger.info("User info rows' size: %d" % len(results))
             for row in results:
                 Id_P = row[0]
                 userEmail = row[1]
@@ -56,24 +55,15 @@ class userModels():
                 City = row[7]
 
                 # 打印结果
-                logger.info("Id_P: %d, \tuserEmail: %s, \tapplePassword: %s,LastName:,age=%d,sex=%s,income=%d" % \
-                      (fname, lname, age, sex, income))
+                logger.info("Id_P: %d, \tuserEmail: %s, \tapplePassword: %s, \tLastName: %s, \tFirstName: %s," \
+                            " \tBirthDay: %s, \tAddress: %s, \tCity: %s" % \
+                      (Id_P, userEmail, applePassword, LastName, FirstName, BirthDay, Address, City))
         except Exception as err:
             logger.error(repr(err))
 
+    # select by email:
+    #def insertNewUserInfo(self):
+    # Update
+    # Delete
 
-
-
-
-
-# 使用 execute()  方法执行 SQL 查询
-cursor.execute("SELECT VERSION()")
-
-# 使用 fetchone() 方法获取单条数据.
-data = cursor.fetchone()
-
-print("Database version : %s " % data)
-
-# 关闭数据库连接
-#db.close()
 

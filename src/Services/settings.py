@@ -64,6 +64,13 @@ LOGGING = {
             'filename': os.path.join(LOGGING_PATH, 'payAddrExtract.log'),
             'encoding': 'utf8'
         },
+        'databaseFile': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'standard',
+            'filename': os.path.join(LOGGING_PATH, 'database.log'),
+            'encoding': 'utf8'
+        },
     },
     'loggers': {
         'appleIdRegister': {
@@ -83,6 +90,11 @@ LOGGING = {
         },
         'payAddrExtract': {
             'handlers': ['console', 'payAddrExtractFile'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'database': {
+            'handlers': ['console', 'databaseFile'],
             'level': 'DEBUG',
             'propagate': True,
         }
