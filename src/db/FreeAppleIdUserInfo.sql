@@ -1,9 +1,12 @@
 CREATE DATABASE IF NOT EXISTS FreeAppleIdDB;
+
 USE FreeAppleIdDB;
 
-CREATE TABLE FreeAppleIdUserInfo
+DROP TABLE IF EXISTS FreeAppleIdUserInfo;
+
+CREATE TABLE IF NOT EXISTS FreeAppleIdUserInfo
 (
-    Id_P int NOT NULL PRIMARY KEY,
+    Id_P int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     userEmail varchar(255) NOT NULL UNIQUE,
     applePassword varchar(255) NOT NULL,
 
