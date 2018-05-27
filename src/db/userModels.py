@@ -12,14 +12,18 @@
 #import pymysql
 import mysql.connector
 
+# Database
+DATABASES_CONFIGS = {
+            'user':'freeapple',
+            'password':'dbfreeid2018',
+            'db':'FreeAppleIdDB',
+            'host':'127.0.0.1',
+            'port':3306,
+            'charset':'utf8'
+}
+
 # 打开数据库连接
-#db = pymysql.connect('localhost', 'freeapple', 'dbfreeid2018', 'FreeAppleIdDB')
-db = mysql.connector.connect(user='freeapple',
-                             password='dbfreeid2018',
-                             db='FreeAppleIdDB',
-                             host='127.0.0.1',
-                             port=3306,
-                             charset='utf8')
+db = mysql.connector.connect(**DATABASES_CONFIGS)
 
 # 使用 cursor() 方法创建一个游标对象 cursor
 cursor = db.cursor()

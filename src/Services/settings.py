@@ -17,19 +17,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djangodb01',
-        'USER': 'postgres',
-        'PASSWORD': 'presqlswr123',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-
-
 # Setting for Django-Python logging framework.
 LOGGING_PATH = os.path.join(BASE_DIR, 'logs')
 LOGGING = {
