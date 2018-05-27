@@ -12,33 +12,36 @@
 import mysql.connector
 import logging
 
-from .dbsettings import dbconnector_freeId
+from .dbsettings import DATABASES_CONFIGS
 
 logger = logging.getLogger("database")
 
-
-
 class userModels():
-    def __init__(self):
-        self.__db = dbconnector_freeId
+    #def __init__(self):
+    #    self.db = dbconnector_freeId
 
     def dbTest(self):
+        # 打开数据库连接
+        self.db = mysql.connector.connect(**DATABASES_CONFIGS)
         # 使用 cursor() 方法创建一个游标对象 cursor
-        cursor = self.__db.cursor()
+        cursor = self.db.cursor()
         # 使用 execute()  方法执行 SQL 查询
         cursor.execute("SELECT VERSION()")
         # 使用 fetchone() 方法获取单条数据.
         data = cursor.fetchone()
         logger.info("Database version : %s " % data)
+        # 关闭数据库连接
+        self.db.close()
 
     def getAllUserInfo(self):
-        # 使用 cursor() 方法创建一个游标对象 cursor
-        cursor = self.__db.cursor()
-
-        # SQL 查询语句
-        sql = "SELECT * FROM FreeAppleIdUserInfo "
-
         try:
+            # 打开数据库连接
+            self.db = mysql.connector.connect(**DATABASES_CONFIGS)
+
+            # 使用 cursor() 方法创建一个游标对象 cursor
+            cursor = self.db.cursor()
+            # SQL 查询语句
+            sql = "SELECT * FROM FreeAppleIdUserInfo "
             # 执行SQL语句
             cursor.execute(sql)
             # 获取所有记录列表
@@ -53,13 +56,15 @@ class userModels():
                 BirthDay = row[5]
                 Address = row[6]
                 City = row[7]
-
                 # 打印结果
                 logger.info("Id_P: %d, \tuserEmail: %s, \tapplePassword: %s, \tLastName: %s, \tFirstName: %s," \
                             " \tBirthDay: %s, \tAddress: %s, \tCity: %s" % \
                       (Id_P, userEmail, applePassword, LastName, FirstName, BirthDay, Address, City))
         except Exception as err:
             logger.error(repr(err))
+        finally:
+            # 关闭数据库连接
+            self.db.close()
 
     # select by email:
     #def insertNewUserInfo(self):

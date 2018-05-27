@@ -20,10 +20,3 @@ DATABASES_CONFIGS = {
             'port':3306,
             'charset':'utf8'
 }
-
-# 打开数据库连接
-dbconnector_freeId = mysql.connector.connect(**DATABASES_CONFIGS)
-
-
-# 关闭数据库连接
-#db.close()
