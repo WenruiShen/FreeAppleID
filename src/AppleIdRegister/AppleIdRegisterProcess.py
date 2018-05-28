@@ -16,6 +16,7 @@ from .AppleIdUserInfo import userInfo
 from .AppleIdRegisterOpt import appleIdRegisterOpt
 from .AppleIdRegisterAuthImg import appleIdAuthImgOpt
 from .AppleIdRegisterAuthEmail import appleIdEmailAuthOpt
+from ..db.userModels import userModels
 
 import logging
 logger = logging.getLogger("appleIdRegister")
@@ -23,6 +24,7 @@ logger = logging.getLogger("appleIdRegister")
 class appleIdRegisterProcessor():
     def __init__(self):
         self.__userInfo = userInfo()
+        self.__usermodel = userModels()
 
     def appleIdRegister(self, userEmail, emailAuthCodeQueue):
         try:
@@ -54,7 +56,7 @@ class appleIdRegisterProcessor():
                 return False
 
             # Step-2: Input personal Info.
-            if not self.__appleIdRegisterOperator.inputAllInfo():
+            if not self.__appleIdRegisterOperator.inputAllInfo(self.__userInfo):
                 logger.info("Failed input personal info.")
                 return False
 
@@ -78,11 +80,16 @@ class appleIdRegisterProcessor():
                     # TODO:
 
                     continue
+
+                # Step-7: Store into database.
+                if not self.__usermodel.insertNewUserInfo(self.__userInfo.userEmail, \
+                                                           self.__userInfo.userPassword, \
+                                                           self.__userInfo.lastName, \
+                                                           self.__userInfo.firstName, \
+                                                           self.__userInfo.userBirthday):
+                    logger.error("Failed store %s into DB." % self.__userInfo.userEmail)
+                    return False
                 return True
-
-            # Step-7: Store into database.
-            # TODO:
-
             return False
         except Exception as err:
             logger.error(repr(err))

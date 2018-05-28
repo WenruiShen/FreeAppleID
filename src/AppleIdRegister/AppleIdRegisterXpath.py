@@ -18,7 +18,7 @@ class appleIdRegisterXpath():
         # Apple-Id Signin page.
         self.__appleIdHomePageUrl = 'https://appleid.apple.com'
         # Apple-Id Signup page.
-        self.__appleIdSignUpPageUrl = self.appleIdHomePageUrl + '/account'
+        self.__appleIdSignUpPageUrl = self.__appleIdHomePageUrl + '/account'
         # Apple Account Manage page.
         self.__appleAccountManageUrl = self.__appleIdSignUpPageUrl + '/manage'
 

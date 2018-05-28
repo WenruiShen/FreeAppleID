@@ -70,6 +70,7 @@ class tempEmailListener:
 
             while True:
                 # Step-5: Whether register appleId success.
+                # TODO:
 
                 # Step-6: Whether thread-2 is stopped.
                 if not thread2.isAlive():
