@@ -15,5 +15,6 @@ from src.Services.loggingInit import setup_logging
 setup_logging()
 
 usermodel = userModels()
-#usermodel.dbTest()
-usermodel.getAllUserInfo()
+usermodel.dbTest()
+
+exit()
