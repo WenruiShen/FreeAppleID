@@ -41,6 +41,11 @@ class tempEmailXpath():
         emailContent_xpath_base = self.__getEmailBaseXpath() + "/div[@id='tabs-content']/div[@id='inbox']"
         return emailContent_xpath_base
 
+    def getEmailListDisplayXpath(self):
+        emailContent_xpath_base = self.__getEmailContentXpathBase()
+        EmailListDisplay_xpath = emailContent_xpath_base + "//table[@id='email_table']"
+        return EmailListDisplay_xpath
+
     def getRemainUpdateSecXpath(self):
         emailContent_xpath_base = self.__getEmailContentXpathBase()
         remainUpdateSec_xpath = emailContent_xpath_base + "//table[@id='email_table']//div[@id='tick']"
@@ -66,6 +71,11 @@ class tempEmailXpath():
         return latestEmailContent_xpath
 
     # Email main text:
+    def getLatestEmailMainTextDisplayXpath(self):
+        emailContent_xpath_base = self.__getEmailContentXpathBase()
+        latestEmailMainTextDisplay_xpath = emailContent_xpath_base + "/div[@id='display_email']"
+        return latestEmailMainTextDisplay_xpath
+
     def __getLatestEmailMainTextXpathBase(self):
         emailContent_xpath_base = self.__getEmailContentXpathBase()
         latestEmailMainText_xpath_base = emailContent_xpath_base + "/div[@id='display_email']/div[@class='email_page']"

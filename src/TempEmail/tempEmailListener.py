@@ -94,6 +94,7 @@ class tempEmailListener:
 
     def __waitAuthCode(self):
         try:
+
             remainUpdateSec = self.__tempEmailParser.getNextUpdateSec()
             logger.debug("Next update in: {} sec.".format(remainUpdateSec))
 

@@ -85,6 +85,32 @@ class tempEmailParser():
             logger.error(repr(err))
             return None
 
+    def isInEmailInboxPage(self):
+        try:
+            inboxDisplayStyle = self.__tempEmailBrowser.find_element_by_xpath(self.__xpath.getEmailListDisplayXpath())\
+                                                        .get_attribute("style")
+            if inboxDisplayStyle == "display: none;":
+                return False
+            return True
+        except:
+            return False
+
+    def isInEmailBodyPage(self):
+        try:
+            inboxDisplayStyle = self.__tempEmailBrowser.find_element_by_xpath(self.__xpath.getLatestEmailMainTextDisplayXpath())\
+                                                        .get_attribute("style")
+            if inboxDisplayStyle == "display: none;":
+                return False
+            return True
+        except:
+            return False
+
+    def enterEmailMainBody(self):
+        return False
+
+    def backToEmailInbox(self):
+        return False
+
     def getLatestEmailAuthCode(self):
         try:
             # Select the latest Email's context:
@@ -94,10 +120,20 @@ class tempEmailParser():
             WebDriverWait(self.__tempEmailBrowser, 5, 0.1).until(
                 EC.presence_of_element_located((By.XPATH, self.__xpath.getLatestEmailAuthCodeXpath()))
             )
+
             # Parse out the Auth Code:
             authCode = self.__tempEmailBrowser.find_element_by_xpath(self.__xpath.getLatestEmailAuthCodeXpath()).text
             if not re.match(r'\w{3,6}', authCode):
                 authCode = None
+
+            # Back to inbox.
+            backToInboxXpath = self.__xpath.getBackToInboxXpath()
+            self.__tempEmailBrowser.find_element_by_xpath(backToInboxXpath).click()
+            # Explicitly wait.
+            WebDriverWait(self.__tempEmailBrowser, 5, 0.1).until(
+                EC.presence_of_element_located((By.XPATH, self.__xpath.getLatestEmailAuthCodeXpath()))
+            )
+
             return authCode
         except Exception as err:
             logger.error(repr(err))
