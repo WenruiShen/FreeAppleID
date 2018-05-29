@@ -87,13 +87,18 @@ class tempEmailParser():
 
     def getLatestEmailAuthCode(self):
         try:
-            # Get the latest Email's context:
-            latestEmailContent_xpath = self.__xpath.getLatestEmailContentXpath()
-            latestEmailContent = self.__tempEmailBrowser.find_element_by_xpath(latestEmailContent_xpath).text
+            # Select the latest Email's context:
+            latestEmailSelect_xpath = self.__xpath.getLatestEmailSelectXpath()
+            self.__tempEmailBrowser.find_element_by_xpath(latestEmailSelect_xpath).click()
+            # Explicitly wait.
+            WebDriverWait(self.__tempEmailBrowser, 5, 0.1).until(
+                EC.presence_of_element_located((By.XPATH, self.__xpath.getLatestEmailAuthCodeXpath()))
+            )
             # Parse out the Auth Code:
-            # TODO:
-
-            return latestEmailContent
+            authCode = self.__tempEmailBrowser.find_element_by_xpath(self.__xpath.getLatestEmailAuthCodeXpath()).text
+            if not re.match(r'\w{3,6}', authCode):
+                authCode = None
+            return authCode
         except Exception as err:
             logger.error(repr(err))
             return None

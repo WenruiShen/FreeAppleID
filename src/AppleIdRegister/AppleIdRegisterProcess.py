@@ -62,8 +62,7 @@ class appleIdRegisterProcessor():
 
             for i in range(3):
                 # Step-3: Recognize the auth img & auth image's code.
-                if not self.__appleIdAuthImgOperator.appleIdAuthImgProcessor():
-                    continue
+                self.__appleIdAuthImgOperator.appleIdAuthImgProcessor()
 
                 # Step-4: Submit personal info.
                 if not self.__appleIdRegisterOperator.submitPersonalInfo():
