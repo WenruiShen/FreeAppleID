@@ -17,6 +17,9 @@ logger = logging.getLogger("appleIdRegister")
 
 class authImgRecongizer():
     def __init__(self):
+        self.__apiUrl = "https://www.juhe.cn/"
+        self.__userName = "15201122867"
+        self.__password = "tz3dbqxx_jufei"
         self.__appkey = "8df14d494a62a4a5eefcb1dbc6b10eef"
         # 验证码的类型:
         # &lt;a href=&quot;http://www.juhe.cn/docs/api/id/60/aid/352&quot; target=&quot;_blank&quot;&gt;查询&lt;/a&gt;
