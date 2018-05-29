@@ -57,12 +57,8 @@ class appleIdAuthImgOpt():
 
     def __recognizeAuthImg(self, authImgBase64):
         try:
-            recognizedAuthCode = self.__authImgRecongizer.authCodeParseRequest(authImgBase64[len('data:image/jpeg;base64, '):])
-            # recognizedAuthCode = "CF6MZ"
-            logger.info(recognizedAuthCode)
-            # 正则判断：
-            # TODO:
-
+            recognizedAuthCode = self.__authImgRecongizer.authCodeRecognize(authImgBase64[len('data:image/jpeg;base64, '):])
+            logger.info("recognizedAuthCode: %s" % recognizedAuthCode)
             return recognizedAuthCode
         except Exception as err:
             logger.error("__recognizeAuthImg Failed: " + repr(err))

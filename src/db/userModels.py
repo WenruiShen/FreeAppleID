@@ -149,7 +149,8 @@ class userModels():
             self.db.close()
 
     def updateUserInfo(self, userEmail, applePassword, LastName, FirstName, BirthDay):
-        if (userEmail is None) or (applePassword is None):
+        if (userEmail is None) or (applePassword is None) or (LastName is None) or \
+                (FirstName is None) or (BirthDay is None):
             logger.error("userEmail and applePassword must not be None!")
             return False
         if (BirthDay is not None) and not re.match(r'\d{4}-\d{2}-\d{2}', BirthDay):
