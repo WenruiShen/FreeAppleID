@@ -14,6 +14,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import re
+import time
 
 from .AppleIdRegisterXpath import appleIdRegisterXpath
 
@@ -61,6 +62,7 @@ class appleIdEmailAuthOpt():
     def inputEmailAuthCode(self, emailAuthCode = "123456"):
         try:
             self.__inputCode(emailAuthCode)
+            time.sleep(2)
             return self.__submitAuthCode()
         except Exception as err:
             logger.error("InputEmailAuthCode Failed: " + repr(err))
