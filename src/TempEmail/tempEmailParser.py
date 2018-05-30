@@ -87,8 +87,9 @@ class tempEmailParser():
 
     def isInEmailInboxPage(self):
         try:
-            inboxDisplayStyle = self.__tempEmailBrowser.find_element_by_xpath(self.__xpath.getEmailListDisplayXpath())\
-                                                        .get_attribute("style")
+            inboxDisplayStyle = self.__tempEmailBrowser.find_element_by_xpath(
+                                                            self.__xpath.getEmailListDisplayXpath())\
+                                                            .get_attribute("style")
             if inboxDisplayStyle == "display: none;":
                 return False
             return True
@@ -97,21 +98,16 @@ class tempEmailParser():
 
     def isInEmailBodyPage(self):
         try:
-            inboxDisplayStyle = self.__tempEmailBrowser.find_element_by_xpath(self.__xpath.getLatestEmailMainTextDisplayXpath())\
-                                                        .get_attribute("style")
-            if inboxDisplayStyle == "display: none;":
+            mainTextDisplayStyle = self.__tempEmailBrowser.find_element_by_xpath(
+                                                            self.__xpath.getLatestEmailMainTextDisplayXpath())\
+                                                            .get_attribute("style")
+            if mainTextDisplayStyle == "display: none;":
                 return False
             return True
         except:
             return False
 
     def enterEmailMainBody(self):
-        return False
-
-    def backToEmailInbox(self):
-        return False
-
-    def getLatestEmailAuthCode(self):
         try:
             # Select the latest Email's context:
             latestEmailSelect_xpath = self.__xpath.getLatestEmailSelectXpath()
@@ -120,20 +116,31 @@ class tempEmailParser():
             WebDriverWait(self.__tempEmailBrowser, 5, 0.1).until(
                 EC.presence_of_element_located((By.XPATH, self.__xpath.getLatestEmailAuthCodeXpath()))
             )
+            return True
+        except:
+            return False
+
+    def backToEmailInbox(self):
+        try:
+            backToInboxXpath = self.__xpath.getBackToInboxXpath()
+            self.__tempEmailBrowser.find_element_by_xpath(backToInboxXpath).click()
+            # Implicitly wait.
+            self.__tempEmailBrowser.implicitly_wait(1)
+            return True
+        except:
+            return False
+
+    def getLatestEmailAuthCode(self):
+        try:
+            if not self.enterEmailMainBody():
+                return None
 
             # Parse out the Auth Code:
             authCode = self.__tempEmailBrowser.find_element_by_xpath(self.__xpath.getLatestEmailAuthCodeXpath()).text
             if not re.match(r'\w{3,6}', authCode):
                 authCode = None
 
-            # Back to inbox.
-            backToInboxXpath = self.__xpath.getBackToInboxXpath()
-            self.__tempEmailBrowser.find_element_by_xpath(backToInboxXpath).click()
-            # Explicitly wait.
-            WebDriverWait(self.__tempEmailBrowser, 5, 0.1).until(
-                EC.presence_of_element_located((By.XPATH, self.__xpath.getLatestEmailAuthCodeXpath()))
-            )
-
+            self.backToEmailInbox()
             return authCode
         except Exception as err:
             logger.error(repr(err))

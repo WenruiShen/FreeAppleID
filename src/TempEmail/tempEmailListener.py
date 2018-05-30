@@ -85,6 +85,9 @@ class tempEmailListener:
                     logger.info("Queue send authCode: " + authCode)
                     emailAuthCodeQueue.put(authCode)
 
+                # Whether ths browser is still on email pages.
+                # TODO:
+
             thread2.join()
             return True
         except Exception as err:
@@ -94,6 +97,11 @@ class tempEmailListener:
 
     def __waitAuthCode(self):
         try:
+            # If its on main text page, go back.
+            # TODO:
+            if not self.__tempEmailParser.isInEmailInboxPage():
+                self.__tempEmailParser.backToEmailInbox()
+
 
             remainUpdateSec = self.__tempEmailParser.getNextUpdateSec()
             logger.debug("Next update in: {} sec.".format(remainUpdateSec))
