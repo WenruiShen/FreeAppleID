@@ -70,7 +70,7 @@ class authImgRecongizer():
             authCode = self.__authCodeParseRequest(base64Str)
             if authCode is None:
                 return None
-            if self.__isLegalAuthCode(authCode):
+            if not self.__isLegalAuthCode(authCode):
                 return None
             return authCode
         except Exception as err:
