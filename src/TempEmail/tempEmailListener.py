@@ -98,8 +98,7 @@ class tempEmailListener:
     def __waitAuthCode(self):
         try:
             # If its on main text page, go back.
-            # TODO:
-            if not self.__tempEmailParser.isInEmailInboxPage():
+            if self.__tempEmailParser.isInEmailBodyPage():
                 self.__tempEmailParser.backToEmailInbox()
 
 
