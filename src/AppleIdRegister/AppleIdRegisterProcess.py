@@ -77,6 +77,7 @@ class appleIdRegisterProcessor():
                 if not self.__appleIdEmailAuthOperator.inputEmailAuthCode(emailAuthCode):
                     # Exit Email code input page.
                     # TODO:
+                    # if failed to load
 
                     continue
 

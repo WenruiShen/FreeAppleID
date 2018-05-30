@@ -137,7 +137,10 @@ class tempEmailParser():
 
             # Parse out the Auth Code:
             authCode = self.__tempEmailBrowser.find_element_by_xpath(self.__xpath.getLatestEmailAuthCodeXpath()).text
-            if not re.match(r'\w{3,6}', authCode):
+            # Analyze the whole text:
+            # TODO:
+
+            if not re.match(r'\d{3,6}', authCode):
                 authCode = None
 
             self.backToEmailInbox()

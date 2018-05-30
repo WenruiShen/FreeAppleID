@@ -13,6 +13,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import re
 
 from .AppleIdRegisterXpath import appleIdRegisterXpath
 
@@ -71,8 +72,8 @@ class appleIdEmailAuthOpt():
             emailAuthCode = emailAuthCodeQueue.get(timeout=120.0)
             logger.info("Queue receive emailAuthCode: " + emailAuthCode)
             # 正则校验
-            # TODO：
-
+            if not re.match(r'\d{3,6}', emailAuthCode):
+                return None
             return emailAuthCode
         except Exception as err:
             logger.error("emailAuthCodeListener Failed: " + repr(err))
