@@ -158,6 +158,9 @@ class appleIdRegisterOpt():
             self.__appleIdRegisterBrowser.find_element_by_xpath(submitXpath).click()
             # Explicitly wait.
             # TODO:
+            WebDriverWait(self.__appleIdRegisterBrowser, 20, 0.5).until(
+                EC.presence_of_element_located((By.XPATH, self.__xpath.getEmailAuthCodeXpathLine()))
+            )
 
             return True
         except Exception as err:

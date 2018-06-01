@@ -61,11 +61,18 @@ class appleIdRegisterProcessor():
                 return False
 
             for i in range(3):
-                # Step-3: Recognize the auth img & auth image's code.
+                # Is in personal info input page.
+                # TODO:
+
+                # Step-3: Recognize and input the auth img code.
+                time.sleep(3)
                 self.__appleIdAuthImgOperator.appleIdAuthImgProcessor()
 
                 # Step-4: Submit personal info.
+                time.sleep(1)
                 if not self.__appleIdRegisterOperator.submitPersonalInfo():
+                    # Wait for auth image reload.
+                    time.sleep(3)
                     continue
 
                 # Step-5: Block wait for the temp email auth code.

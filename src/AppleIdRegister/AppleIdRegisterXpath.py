@@ -115,12 +115,12 @@ class appleIdRegisterXpath():
         emailAuthCode_xpath_base = "/html/body//step-verify-code"
         return emailAuthCode_xpath_base
 
-    def __getEmailAuthCodeXpathLine(self):
+    def getEmailAuthCodeXpathLine(self):
         emailAuthCodeXpathLine = self.__getEmailAuthCodeXpathBase() + "//div[@class='security-code-container force-ltr']"
         return emailAuthCodeXpathLine
 
     def getEmailAuthCodeXpathInput(self, index):
-        emailAuthCodeXpathInput = self.__getEmailAuthCodeXpathLine() + "/div[%s]/input" % index
+        emailAuthCodeXpathInput = self.getEmailAuthCodeXpathLine() + "/div[%s]/input" % index
         return emailAuthCodeXpathInput
 
     def getSubmitEmailAuthCodeXpathButtonOk(self):
